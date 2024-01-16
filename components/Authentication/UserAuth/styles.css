@@ -1,0 +1,180 @@
+:root {
+    --form-width: 600px;
+}
+
+
+#pwdnote,
+#uidnote {
+    text-align: left;
+}
+
+#confirmnote {
+    width: inherit;
+    text-align: left;
+}
+
+section {
+    width: 100%;
+    max-width: 420px;
+    min-width: 400px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-right: 1rem;
+}
+
+.authenticationForm {
+    min-width: var(--form-width);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+    align-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+    align-content: center;
+    align-items: center;
+}
+
+@media (max-width: 600px) {
+    .row-container {
+        flex-direction: row;
+        padding-bottom: 0;
+    }
+}
+
+.authenticationForm a,
+.authenticationForm a:visited {
+    color: #fff;
+}
+
+.authenticationForm label,
+.authenticationForm button,
+.authenticationForm select,
+.authenticationForm input {
+    margin: 1rem;
+    font-size: large;
+    font-weight: bolder;
+}
+
+.authenticationForm button,
+.authenticationForm select,
+.authenticationForm input {
+    padding: 0.5rem;
+}
+
+.authenticationForm .row-container {
+    width: 100%;
+}
+
+.authenticationForm .instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: var(--primary-color);
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
+
+.authenticationForm .offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.hide {
+    display: none;
+}
+
+.authenticationForm .valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+}
+
+.authenticationForm .invalid {
+    color: red;
+    margin-left: 0.25rem;
+}
+
+.authenticationForm .errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.authenticationForm input,
+.authenticationForm select {
+    width: 90%;
+    margin: 5px;
+    border-radius: 20px;
+}
+
+.authenticationForm button {
+    width: 95%;
+    margin: 5px;
+    border-radius: 20px;
+}
+
+
+.authenticationForm select {
+    width: 95%;
+}
+
+.authenticationForm button {
+    margin-top: 20px;
+}
+
+
+.target-div {
+    width: 100%;
+    height: 100%;
+}
+
+/* Loading icon */
+.loading-icon {
+    border-radius: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.75);
+    /* Set the desired transparency */
+    z-index: 1;
+    /* Ensure the loading icon appears above the target div */
+}
+
+/* Replace the following class with your actual loading icon styles */
+.spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,27 @@
+.glassmorphic-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid rgb(104, 102, 102);
+    border-radius: 3%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+}
+
+.solid-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgba(192, 192, 192, 0.8);
+    backdrop-filter: blur(20px);
+    padding: 20px;
+    border: 1px solid rgb(104, 102, 102);
+    border-radius: 3%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.border-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 3%;
+}

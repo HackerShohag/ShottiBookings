@@ -1,0 +1,47 @@
+/* BusSeatLayout.css */
+
+.bus-seat-layout {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    max-width: 400px;
+}
+
+.seat {
+    width: 60px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.seat.selected {
+    background-color: #4a154b;
+    color: #fff;
+}
+
+.blank-seat {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0px solid #ddd;
+}
+
+.occupied {
+    background-color: #000000;
+    color: #ff0000;
+}
+
+.available {
+    background-color: green;
+    color: #00ff00;
+}
+
+.selected {
+    background-color: #4a154b;
+    color: #4a154b;
+}

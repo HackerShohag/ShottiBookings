@@ -1,0 +1,40 @@
+/* InfoRow.css */
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #aaaaaa;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #72727283;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+}
+
+.column {
+    flex: 1;
+    padding: 0 10px;
+}
+
+.bus-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.bus-info,
+.payment-info {
+    text-align: left;
+}
+
+.payment-info {
+    text-align: right;
+}
+
+.book-button {
+    background-color: #4a154b;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+}
