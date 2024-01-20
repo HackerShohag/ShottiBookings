@@ -1,3 +1,5 @@
+'use client';
+
 import {
 	Navbar as NextUINavbar,
 	NavbarContent,
@@ -14,7 +16,7 @@ import { Input } from "@nextui-org/input";
 
 import { link as linkStyles } from "@nextui-org/theme";
 
-import { getServerSession } from "next-auth";
+import { useSession } from "next-auth/react";
 import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
@@ -26,9 +28,9 @@ import {
 } from "@/components/icons";
 import LogOutPage, { LogOutButton } from "@/app/logout/logout";
 
-export const Navbar = async () => {
-	const session = await getServerSession();
-	console.log(session);
+export const Navbar = () => {
+
+	const { data: session, status } = useSession();
 
 	const searchInput = (
 		<Input
@@ -180,14 +182,12 @@ export const Navbar = async () => {
 								</Link>
 							</NavbarMenuItem>
 						))
-					)
-					}
+					)}
 					{session ? (
 						<NavbarItem className="hidden md:flex">
 							<LogOutButton />
 						</NavbarItem>
-					) : null
-					}
+					) : null}
 				</div>
 			</NavbarMenu>
 		</NextUINavbar>

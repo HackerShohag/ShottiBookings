@@ -1,4 +1,5 @@
 import tick from './tick.jpg';
+import Image from 'next/image';
 
 interface BasicFormProps {
   onButtonClick?: (() => void) | undefined;
@@ -15,8 +16,8 @@ const PageFour = ({ onButtonClick }: BasicFormProps) => {
       className="mw5 bg-white pa2-ns mt5 dib"
       style={{ maxWidth: "30%", maxHeight: '30%' }}
     >
-      <img
-        src={tick}
+      <Image
+        src={tick.src}
         className="h3 w3"
         title="success icon"
         alt="tick-icon"

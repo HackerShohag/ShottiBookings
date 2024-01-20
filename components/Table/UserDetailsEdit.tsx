@@ -1,27 +1,35 @@
 import { useState } from "react";
-import { Button, Input, Spacer } from "@nextui-org/react";
+import { Button, Input, Spacer, Select, SelectItem } from "@nextui-org/react";
 import { AdminProps } from "@/components/Table/render-cell";
 
 interface UserDetailsProps {
     adminProps: AdminProps | undefined;
-    onSubmit: (data: AdminProps) => void;
+    onSubmit: (data: AdminProps) => boolean | Promise<boolean>;
 }
 
 const UserDetailsEdit = ({ adminProps, onSubmit }: UserDetailsProps) => {
     if (!adminProps) return null;
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [formData, setFormData] = useState(adminProps);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [isLoading, setIsLoading] = useState(false);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [success, setSuccess] = useState(false);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
-        e.preventDefault();
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
         setFormData((prevData) => ({
             ...prevData,
             [field]: e.target.value,
         }));
     };
 
-    const handleSubmit = () => {
-        onSubmit(formData);
+    const handleSubmit = async () => {
+        setIsLoading(true);
+        const response = await onSubmit(formData);
+        setIsLoading(false);
+        if (response) {
+            setSuccess(true);
+        }
     };
 
     const inputFields = [
@@ -37,27 +45,45 @@ const UserDetailsEdit = ({ adminProps, onSubmit }: UserDetailsProps) => {
     return (
         <div className="flex flex-col gap-2 w-full">
             {inputFields.map((field, index) => (
-                <Input
-                    fullWidth
-                    className="w-full"
-                    key={index}
-                    label={field.label}
-                    variant="bordered"
-                    value={field.value}
-                    placeholder={field.placeholder}
-                    labelPlacement="outside-left"
-                    onChange={(e) => handleInputChange(e, field.field)}
-                />
+                field.field === 'gender' ? (
+                    <Select
+                        key={index}
+                        label="Gender:"
+                        placeholder="Select Gender"
+                        labelPlacement="outside-left"
+                        className="max-w-xs"
+                        disableSelectorIconRotation
+                        value={field.value}
+                        onChange={(e) => handleInputChange(e, field.field)}
+                    >
+                        <SelectItem key='male' value="male">Male</SelectItem>
+                        <SelectItem key='fmale' value="fmale">Female</SelectItem>
+                        <SelectItem key='other' value="other">Other</SelectItem>
+                    </Select>
+                ) : (
+                    <Input
+                        fullWidth
+                        className="w-full"
+                        key={index}
+                        label={field.label}
+                        variant="bordered"
+                        value={field.value}
+                        placeholder={field.placeholder}
+                        labelPlacement="outside-left"
+                        onChange={(e) => handleInputChange(e, field.field)}
+                    />
+                )
             ))}
             <Spacer y={1} />
             <Button
                 fullWidth
                 color="primary"
                 onClick={handleSubmit}
+                disabled={isLoading}
+                isLoading={isLoading}
             >
                 Save Changes
             </Button>
-            <Spacer y={2} />
         </div>
     );
 };

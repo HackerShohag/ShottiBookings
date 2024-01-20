@@ -6,10 +6,21 @@ import BusInfo from "@/components/BusInfo/BusInfo";
 import { siteConfig } from "@/config/site";
 import { Card, CardBody, CardHeader, CircularProgress } from "@nextui-org/react";
 
-const busImg = require("@/public/assets/bus.png");
+import busImg from "@/public/assets/bus.png";
 
 interface BasicFormProps {
   onButtonClick?: (() => void) | undefined;
+}
+
+interface OfferedJourney {
+  bus: {
+    no: string;
+    companyName: string;
+  };
+  slot: any[];
+  startTime: string;
+  from: string;
+  to: string;
 }
 
 const PageTwo = ({ onButtonClick }: BasicFormProps) => {
@@ -18,7 +29,7 @@ const PageTwo = ({ onButtonClick }: BasicFormProps) => {
   const destination = searchParams.get("destination");
   const date = searchParams.get("date");
 
-  const [offeredJourney, setOfferedJourney] = useState([]);
+  const [offeredJourney, setOfferedJourney] = useState<OfferedJourney[]>([]);
   const [processing, setProcessing] = useState(true);
 
   useEffect(() => {
@@ -65,13 +76,13 @@ const PageTwo = ({ onButtonClick }: BasicFormProps) => {
             offeredJourney.map((journey, index) => (
               <BusInfo
                 key={index}
-                name={journey?.bus?.companyName}
                 id={journey?.bus?.no}
                 seatAvailability={journey?.slot.length}
                 departureTime={journey?.startTime}
-                image={busImg}
+                image={busImg.src}
                 route={journey?.from + " - " + journey?.to}
                 fare={500}
+                name={journey?.bus?.companyName}
                 onButtonClick={onButtonClick}
               />
             ))) : (
@@ -90,4 +101,5 @@ const PageTwo = ({ onButtonClick }: BasicFormProps) => {
     </div>
   );
 }
+
 export default PageTwo;

@@ -88,6 +88,12 @@ export const AdminSidebarWrapper = () => {
                     icon={<ProductsIcon />}
                     href="/admin/dashboard/schedules"
                   />
+                  <SidebarItem
+                    isActive={pathname === ""}
+                    title="Drivers"
+                    icon={<FilterIcon />}
+                    href="/admin/dashboard/schedules"
+                  />
                 </SidebarMenu>
               </div>
             </div>

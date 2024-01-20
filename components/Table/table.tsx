@@ -33,6 +33,7 @@ export const TableWrapper = () => {
   const [adminId, setAdminId] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [processing, setProcessing] = useState(false);
+  const [editProcessing, setEditProcessing] = useState(false);
 
   const columns = [
     { name: 'NAME', uid: 'name' },
@@ -60,6 +61,7 @@ export const TableWrapper = () => {
   };
 
   const updateAdmin = (adminData: AdminProps) => {
+    setEditProcessing(true);
     const response = fetch(siteConfig.backendServer.address + '/user/update-admin', {
       method: 'POST',
       headers: {
@@ -71,10 +73,15 @@ export const TableWrapper = () => {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        setProcessing(false);
-        onOpenChange();
+        setEditProcessing(false);
+        return true;
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(err);
+        setEditProcessing(false);
+        return false;
+      })
+    return false;
   };
 
   useEffect(() => {
@@ -138,25 +145,28 @@ export const TableWrapper = () => {
               <ModalHeader className="flex flex-col gap-1">Admin Details</ModalHeader>
               <ModalBody>
                 {
-                  isEditing ? (
+                  editProcessing ? (
+                    <div className="flex justify-center items-center">
+                      <Spinner className="m-20" size="lg" />
+                    </div>
+                  ) : isEditing ? (
                     <UserDetailsEdit adminProps={admins.at(Number(adminId) - 1)} onSubmit={updateAdmin} />
                   ) : (
                     <UserDetails adminProps={admins.at(Number(adminId) - 1)} />
                   )
                 }
               </ModalBody>
-              {
-                isEditing ? (
-                  null
-                ) : (
-                  <ModalFooter>
+              <ModalFooter>
+                {
+                  isEditing ? (
+                    null
+                  ) : (
                     <Button color="danger" variant="light" onPress={onClose}>
                       Close
                     </Button>
-                  </ModalFooter>
-
-                )
-              }
+                  )
+                }
+              </ModalFooter>
             </>
           )}
         </ModalContent>
