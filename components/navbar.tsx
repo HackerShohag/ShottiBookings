@@ -133,6 +133,17 @@ export const Navbar = async () => {
 			<NavbarMenu>
 				{searchInput}
 				<div className="mx-4 mt-2 flex flex-col gap-2">
+					{siteConfig.navMenuItems.map((item, index) => (
+						<NavbarMenuItem key={`${item}-${index}`}>
+							<Link
+								color={"foreground"}
+								href={item.href}
+								size="lg"
+							>
+								{item.label}
+							</Link>
+						</NavbarMenuItem>
+					))}
 					{session ? (
 						siteConfig.navMenuUserItems.map((item, index) => (
 							<NavbarMenuItem key={`${item}-${index}`}>
@@ -173,7 +184,6 @@ export const Navbar = async () => {
 					}
 					{session ? (
 						<NavbarItem className="hidden md:flex">
-							<p>fuck</p>
 							<LogOutButton />
 						</NavbarItem>
 					) : null

@@ -1,5 +1,5 @@
 import { Button } from "@nextui-org/button";
-import SeatLayout, { SeatProps } from "../../../../components/BusSeatLayout/BusSeatLayout";
+import SeatLayout, { SeatProps } from "@/components/BusSeatLayout/BusSeatLayout";
 import "./PageThree.css";
 
 interface BasicFormProps {
@@ -22,7 +22,7 @@ const PageThree = ({ onButtonClick, origin, destination, selectedSeats }: BasicF
             Destination: {destination}
           </div>
         </div>
-        <SeatLayout />
+        <SeatLayout ticketStatus={{ available: "Available", booked: "Booked", occupied: "Occupied" }} />
 
 
         <div>

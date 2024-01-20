@@ -7,6 +7,8 @@ import { Navbar } from "@/components/navbar";
 import { Link } from "@nextui-org/link";
 import clsx from "clsx";
 
+import SidebarWrapper from "@/components/Sidebar/sidebar";
+
 import { CompanyLogo } from "@/components/icons";
 
 export const metadata: Metadata = {
@@ -46,6 +48,8 @@ export default function RootLayout({
 				}}
 			>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+					<SidebarWrapper />
+
 					<div className="relative flex flex-col h-screen">
 						<Navbar />
 						<main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">

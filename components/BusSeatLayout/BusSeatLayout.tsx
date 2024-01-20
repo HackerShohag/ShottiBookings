@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import './BusSeatLayout.css'; // Import your CSS file for styling
 import { Button } from '@nextui-org/button';
@@ -29,7 +31,16 @@ const BlankSeat = () => {
     );
 };
 
-const SeatLayout: React.FC<{ width?: string }> = ({ width }) => {
+interface SeatLayoutProps {
+    width?: string;
+    ticketStatus: {
+        available: string;
+        booked: string;
+        occupied: string;
+    };
+}
+
+const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
     const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
 
     const handleSeatSelect = (seatNumber: string) => {
@@ -101,7 +112,7 @@ const SeatLayout: React.FC<{ width?: string }> = ({ width }) => {
     };
 
     return (
-        <div className="row" style={{ width: width }}>
+        <div className="row" style={{ width: props.width }}>
             <div className='flex column justify-center items-center'>
 
                 <div className='bus-seat-layout'>
@@ -110,16 +121,16 @@ const SeatLayout: React.FC<{ width?: string }> = ({ width }) => {
             </div>
             <div className="flex row m-3 justify-between items-center">
                 <div className="seat-legend">
-                    <div className="seat" style={{ backgroundColor: "green" }}></div>
-                    <span>Available</span>
+                    <Button isDisabled className="seat available" ></Button>
+                    <span className='flex justify-center'>{props.ticketStatus.available}</span>
                 </div>
                 <div className="seat-legend">
-                    <div className="seat selected"></div>
-                    <span>Selected</span>
+                    <Button isDisabled className="seat selected"></Button>
+                    <span className='flex justify-center'>{props.ticketStatus.booked}</span>
                 </div>
                 <div className="seat-legend">
-                    <div className="seat occupied" style={{ backgroundColor: "grey" }}></div>
-                    <span>Occupied</span>
+                    <Button isDisabled className="seat occupied" ></Button>
+                    <span className='flex justify-center'>{props.ticketStatus.occupied}</span>
                 </div>
             </div>
         </div>

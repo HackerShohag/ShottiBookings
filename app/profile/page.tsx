@@ -1,42 +1,51 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
-import { Tabs, Tab, Card, CardBody, CardHeader } from "@nextui-org/react";
-import { getServerSession } from "next-auth";
+import React, { useState } from "react";
+import { Tabs, Tab, Card, CardBody, CardHeader, Input, CardFooter, Button, CircularProgress } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
 import { siteConfig } from "@/config/site";
-
-async function getProfile() {
-    const session = await getServerSession();
-
-    console.log(session);
-
-    const profile = await fetch(siteConfig.backendServer.address + "/api/user/get-customer", {
-        method: "GET",
-        headers: {
-            'content-type': 'application/json',
-        },
-        // Include the credentials in the request
-        credentials: 'include',
-    });
-
-    const data = await profile.json();
-    console.log(data);
-
-    return data; // Return the profile data
-}
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
-    const [profileData, setProfileData] = useState(null);
+    const { data: session, status } = useSession();
+    const router = useRouter();
 
-    useEffect(() => {
-        // Use an async function inside useEffect
-        const fetchData = async () => {
-            const data = await getProfile();
-            setProfileData(data);
-        };
+    if (!session && status !== 'loading') {
+        router.replace("/login");
+    }
 
-        fetchData(); // Invoke the async function
-    }, []); // Empty dependency array to run the effect once on mount
+    const [name, setName] = useState(session?.user.name);
+    const [email, setEmail] = useState(session?.user.email);
+    const [role, setRole] = useState(session?.user.role);
+
+    const updateUserInfo = async () => {
+        const data = await fetch(siteConfig.backendServer.address + "/api/user/update-customer/" + session?.user?.id, {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `${session?.accessToken}`,
+            },
+            body: JSON.stringify({
+                email: email,
+                name: name,
+            }),
+        });
+
+        const res = await data.json();
+    }
+
+    const getOfferedJourneys = async () => {
+        const data = await fetch(siteConfig.backendServer.address + "/api/journey/getOfferedJourneys", {
+            method: "GET",
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `${session?.accessToken}`,
+            },
+        });
+
+        const res = await data.json();
+        console.log(res);
+    }
 
     let tabs = [
         {
@@ -46,10 +55,11 @@ export default function ProfilePage() {
                 <Card>
                     <CardHeader className="text-2xl justify-center">Profile</CardHeader>
                     <CardBody>
-                        <p>Name: {profileData?.name}</p>
-                        <p>Email: {profileData?.email}</p>
-                        <p>Phone: {profileData?.phone}</p>
+                        <p>Name: {session?.user.name}</p>
+                        <p>Email: {session?.user.email}</p>
+                        <p>Phone: {session?.user.role}</p>
                     </CardBody>
+
                 </Card>
             ),
         },
@@ -58,17 +68,14 @@ export default function ProfilePage() {
             label: "Edit",
             content: <Card>
                 <CardHeader className="text-2xl justify-center">Edit Profile</CardHeader>
-                <CardBody>
-                    <p>
-                        Name: { }
-                    </p>
-                    <p>
-                        Email: { }
-                    </p>
-                    <p>
-                        Phone: { }
-                    </p>
+                <CardBody className="flex-col gap-5">
+                    <Input label="Name:" labelPlacement="outside" value={name} onChange={(e) => setName(e.target.value)} />
+                    <Input label="Email:" labelPlacement="outside" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Input label="Role:" labelPlacement="outside" value={role} onChange={(e) => setRole(e.target.value)} disabled />
                 </CardBody>
+                <CardFooter>
+                    <Button color="primary" onClick={updateUserInfo}>Update Information</Button>
+                </CardFooter>
             </Card>
         },
         {
@@ -87,15 +94,40 @@ export default function ProfilePage() {
 
     return (
         <div className="flex w-full flex-col">
-            <Tabs className=" flex w-full flex-col p-2" aria-label="Dynamic tabs" items={tabs}>
-                {(item) => (
-                    <Tab key={item.id} title={item.label}>
-                        <Card>
-                            <CardBody>{item.content}</CardBody>
-                        </Card>
-                    </Tab>
-                )}
-            </Tabs>
+            {
+                session?.user.role === 'admin' ?
+                    <div className="flex justify-between m-2">
+                        <Button color="primary" onClick={() => { router.push('/'); router.refresh() }}>Go Home</Button>
+                        <Button color="danger" onClick={() => { router.push('/admin/dashboard'); router.refresh() }}>Admin Dashboard</Button>
+                    </div> :
+                    session?.user.role === 'operator' ?
+                        <div className="flex justify-between m-2">
+                            <Button color="primary" onClick={() => { router.push('/'); router.refresh() }}>Go Home</Button>
+                            <Button color="danger" onClick={() => { router.push('/operator/dashboard'); router.refresh() }}>Operator Dashboard</Button>
+                        </div> :
+                        null
+            }
+            {
+                status === 'loading' ?
+                    <Card className="flex flex-col w-full justify-center">
+                        <CardHeader className="text-2xl justify-center">Loading...</CardHeader>
+                        <CardBody className="flex flex-col w-full items-center h-full">
+                            <CircularProgress className="flex flex-col w-full justify-center" color="primary" size="lg" aria-label="Loading..." />
+                        </CardBody>
+                        <CardFooter className="flex flex-col w-full justify-center">
+                            <Button color="primary" onClick={() => router.push('/')}>Go Home</Button>
+                        </CardFooter>
+                    </Card> :
+                    <Tabs className=" flex w-full flex-col p-2" aria-label="Dynamic tabs" items={tabs}>
+                        {(item) => (
+                            <Tab key={item.id} title={item.label}>
+                                <Card>
+                                    <CardBody>{item.content}</CardBody>
+                                </Card>
+                            </Tab>
+                        )}
+                    </Tabs>
+            }
         </div>
     );
 }

@@ -1,9 +1,10 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Select, SelectItem, Input, Button } from "@nextui-org/react";
 import { cities as citiesbd } from './data';
-import { BasicFormProps, FormData, City } from './Form';
+import { BasicFormProps, FormData } from './Form';
 import { SelectorIcon } from "@/components/icons";
-
 
 export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
     const [formData, setFormData] = useState<FormData>({
@@ -13,19 +14,10 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
         numberOfTickets: 1,
     });
 
-    const [cities, setCities] = useState<City[]>([]);
-    const [filteredDestinations, setFilteredDestinations] = useState<string[]>([]);
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
-
-        if (name === 'origin') {
-            const selectedCity = cities.find((city) => city.source === value);
-            setFilteredDestinations(selectedCity ? selectedCity.destinations : []);
-        }
     };
-
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -33,6 +25,11 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
         if (onButtonClick) {
             onButtonClick();
         }
+        const searchParams = new URLSearchParams();
+        searchParams.set('source', formData.origin);
+        searchParams.set('destination', formData.destination);
+        searchParams.set('date', formData.date);
+        window.history.pushState({}, '', `?${searchParams.toString()}`);
     };
 
     // Calculate minimum and maximum dates for the date picker
@@ -43,11 +40,25 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
         .split('T')[0]; // Maximum date is today + 7 days
 
     useEffect(() => {
+        // Restore values from search params
+        const searchParams = new URLSearchParams(window.location.search);
+        const origin = searchParams.get('origin') || '';
+        const destination = searchParams.get('destination') || '';
+        const date = searchParams.get('date') || '';
+
+        setFormData((prevData) => ({
+            ...prevData,
+            origin,
+            destination,
+            date,
+        }));
+
         fetch('src/assets/cities.json')
             .then((response) => response.json())
             .then((data) => {
-                setCities(data);
-                setFilteredDestinations(data[0]?.destinations || []);
+                if (!origin) {
+                    setFormData((prevData) => ({ ...prevData, origin: data[0]?.value }));
+                }
             })
             .catch((error) => console.error('Error fetching cities:', error));
     }, []);
@@ -55,13 +66,16 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
     return (
         <div className='booking-form-container'>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="origin">Select Source:</label>
                 <Select
+                    label="Select Source:"
                     placeholder="Select Source"
                     className="max-w-xs"
-                    disableSelectorIconRotation
+                    // disableSelectorIconRotation
                     labelPlacement="outside"
                     selectorIcon={<SelectorIcon />}
+                    name="origin"
+                    value={formData.origin}
+                    onChange={handleChange}
                 >
                     {citiesbd.map((item) => (
                         <SelectItem key={item.value} value={item.value}>
@@ -69,14 +83,16 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
                         </SelectItem>
                     ))}
                 </Select>
-                <label htmlFor="destination">Select Destination:</label>
                 <Select
+                    label="Select Destination:"
                     placeholder="Select Destination"
                     className="max-w-xs"
                     labelPlacement="outside"
-                    disableSelectorIconRotation
+                    // disableSelectorIconRotation
                     selectorIcon={<SelectorIcon />}
-
+                    name="destination"
+                    value={formData.destination}
+                    onChange={handleChange}
                 >
                     {citiesbd.map((item) => (
                         <SelectItem key={item.value} value={item.value}>
@@ -90,10 +106,15 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
                     isRequired
                     type="date"
                     labelPlacement='outside'
+                    min={minDate}
+                    max={maxDate}
+                    name="date"
+                    value={formData.date}
+                    onChange={handleChange}
                 />
                 <Button
                     fullWidth
-                    onClick={handleSubmit}
+                    type='submit'
                 >
                     Check Route
                 </Button>

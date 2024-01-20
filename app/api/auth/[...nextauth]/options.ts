@@ -2,13 +2,31 @@ import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { siteConfig } from '@/config/site';
 
+declare module "next-auth" {
+    interface User {
+        id: string;
+        name: string;
+        email: string;
+        role: string;
+    }
+}
+
+declare module "next-auth" {
+    interface Session {
+        accessToken: string;
+        user: User;
+    }
+}
+
 export const options: NextAuthOptions = {
+
     session: {
-        strategy: 'jwt',
+        strategy: 'jwt'
     },
     pages: {
         signIn: '/login',
         signOut: '/logout',
+        error: '/login/error'
     },
     providers: [
         CredentialsProvider({
@@ -32,31 +50,30 @@ export const options: NextAuthOptions = {
                 });
 
                 const data = await res.json();
+                console.log(data);
 
                 if (res.ok && data) {
-                    console.log("User has been logged in.");
-                    console.log(data.data.token);
-                    return {
-                        ...data?.data?.user,
-                        token: data?.data?.token
-                    };
+                    return data?.data;
                 }
                 return null;
             },
         })
     ],
     callbacks: {
-        async jwt(params) {
-            const { token, user } = params;
+        async jwt({ session, token, user }) {
             if (user) {
-                token.accessToken = user.token;
+                token.accessToken = user?.token;
+                token.role = user?.role;
+                token.id = user?.id;
             }
             return token;
         },
-        async session(params) {
-            const { session, token } = params;
-            session.accessToken = token.accessToken;
+        async session({ session, token, user }) {
+            session.accessToken = token.accessToken as string;
+            session.user.role = token.role as string;
+            session.user.id = token.id as string;
             return session;
-        }
-    }
+        },
+    },
+
 }

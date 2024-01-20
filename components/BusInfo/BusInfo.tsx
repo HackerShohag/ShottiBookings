@@ -13,6 +13,7 @@ interface BusInfoProps {
     image: string;
     route: string;
     fare: number;
+    isAC?: boolean;
     onButtonClick?: (() => void) | undefined;
 }
 
@@ -23,6 +24,7 @@ const BusInfo: React.FC<BusInfoProps> = (props) => {
                 <div className="flex row items-center">
                     <div className="column">
                         <Image src={props.image} alt="Bus Image" className="bus-image" />
+                        <p className='flex justify-center'>{props.isAC ? 'AC' : 'Non-AC'}</p>
                     </div>
                     <div className="column">
                         <h3>Bus Name: {props.name}</h3>
