@@ -2,21 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { Select, SelectItem, Input, Button } from "@nextui-org/react";
+
+import { FormData } from '@/types';
 import { cities as citiesbd } from './data';
 import { SelectorIcon } from "@/components/icons";
-
-export interface City {
-    id: string;
-    source: string;
-    destinations: string[];
-}
-
-export interface FormData {
-    origin: string;
-    destination: string;
-    date: string;
-    numberOfTickets: number;
-}
 
 export interface BasicFormProps {
     onButtonClick: (() => void) | undefined;
@@ -37,27 +26,16 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        if (onButtonClick) {
-            onButtonClick();
-        }
-        const searchParams = new URLSearchParams();
-        searchParams.set('source', formData.origin);
-        searchParams.set('destination', formData.destination);
-        searchParams.set('date', formData.date);
-        window.history.pushState({}, '', `?${searchParams.toString()}`);
     };
 
-    // Calculate minimum and maximum dates for the date picker
     const today = new Date();
-    const minDate = today.toISOString().split('T')[0]; // Minimum date is today
+    const minDate = today.toISOString().split('T')[0];
     const maxDate = new Date(today.setDate(today.getDate() + 7))
         .toISOString()
-        .split('T')[0]; // Maximum date is today + 7 days
+        .split('T')[0];
 
     useEffect(() => {
-        // Restore values from search params
-        const searchParams = new URLSearchParams(window.location.search);
+        const searchParams = new URLSearchParams(location.search);
         const origin = searchParams.get('origin') || '';
         const destination = searchParams.get('destination') || '';
         const date = searchParams.get('date') || '';
@@ -86,7 +64,6 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
                     label="Select Source:"
                     placeholder="Select Source"
                     className="max-w-xs"
-                    // disableSelectorIconRotation
                     labelPlacement="outside"
                     selectorIcon={<SelectorIcon />}
                     name="origin"
@@ -104,7 +81,6 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
                     placeholder="Select Destination"
                     className="max-w-xs"
                     labelPlacement="outside"
-                    // disableSelectorIconRotation
                     selectorIcon={<SelectorIcon />}
                     name="destination"
                     value={formData.destination}

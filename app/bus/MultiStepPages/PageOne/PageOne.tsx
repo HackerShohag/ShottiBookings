@@ -4,7 +4,6 @@ import { BorderContainer } from '@/components/Containers/Containers';
 import '@/components/BookingForm/BookingForm.css';
 
 import busImg from '@/public/assets/bus.png';
-// import '@/components/BookingForm/BookingForm.css';
 import { BasicForm } from '@/components/BookingForm/BasicForm'
 
 export interface PageOneProps {

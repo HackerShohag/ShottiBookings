@@ -69,7 +69,7 @@ export const siteConfig = {
 		register: "/register",
 	},
 	backendServer: {
-		address: "http://localhost:5000/api",
+		address: process.env.BACKEND_SERVER || "http://localhost:5000/api",
 	},
 	companyName: "Shotti Bookings",
 };
