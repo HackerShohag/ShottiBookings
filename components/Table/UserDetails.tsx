@@ -1,20 +1,20 @@
 import { Textarea } from "@nextui-org/react";
-import { AdminProps } from "@/components/Table/render-cell";
+import { UserProps } from "@/components/Table/render-cell";
 
 interface UserDetailsProps {
-    adminProps: AdminProps | undefined;
+    userProps: UserProps | undefined;
 }
 
-const UserDetails = ({ adminProps }: UserDetailsProps) => {
-    if (!adminProps) return null;
+const UserDetails = (props: UserDetailsProps) => {
+    if (!props.userProps) return null;
     const inputFields = [
-        { label: "Name:", value: adminProps.name, placeholder: "No User Name" },
-        { label: "Email:", value: adminProps.email, placeholder: "No User Mail" },
-        { label: "Phone Number:", value: adminProps.contactNo, placeholder: "No Phone Number" },
-        { label: "Address:", value: adminProps.address, placeholder: "Address Not Defined" },
-        { label: "Gender:", value: adminProps.gender.charAt(0).toUpperCase() + adminProps.gender.slice(1), placeholder: "Gender Not Defined" },
-        { label: "Date of Birth:", value: adminProps.dateOfBirth, placeholder: "Date of Birth Not Defined" },
-        { label: "Travelled Journeys:", value: adminProps.dateOfBirth, placeholder: "No Travelled Journeys" },
+        { label: "Name:", value: props.userProps.name, placeholder: "No User Name" },
+        { label: "Email:", value: props.userProps.email, placeholder: "No User Mail" },
+        { label: "Phone Number:", value: props.userProps.contactNo, placeholder: "No Phone Number" },
+        { label: "Address:", value: props.userProps.address, placeholder: "Address Not Defined" },
+        { label: "Gender:", value: props.userProps.gender.charAt(0).toUpperCase() + props.userProps.gender.slice(1), placeholder: "Gender Not Defined" },
+        { label: "Date of Birth:", value: props.userProps.dateOfBirth, placeholder: "Date of Birth Not Defined" },
+        { label: "Travelled Journeys:", value: props.userProps.dateOfBirth, placeholder: "No Travelled Journeys" },
     ];
 
     return (

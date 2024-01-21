@@ -62,7 +62,7 @@ export default function RootLayout({
 								title="Go To Home Page"
 							>
 								<CompanyLogo />
-								<p className="text-primary">Sotti Bookings</p>
+								<p className="text-primary">{siteConfig.companyName}</p>
 							</Link>
 						</footer>
 					</div>

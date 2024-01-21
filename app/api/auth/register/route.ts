@@ -18,21 +18,16 @@ export async function POST(request: Request) {
             }
         }
 
-        fetch(siteConfig.backendServer.address + '/user/create-customer', {
+        const response = await fetch(siteConfig.backendServer.address + '/user/create-customer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-        }).then(res => res.json()).then(
-            data => {
-                console.log("User have been created.");
-                router.push(siteConfig.links.login);
-            }
-        ).catch((error) => {
-            console.error('Error:', error);
-        });
+        })
 
+        console.log("User have been created.");
+        router.push(siteConfig.links.login);
     } catch (e) {
         console.log({ e });
     }

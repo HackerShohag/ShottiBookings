@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-	name: "Sotti Bookings - Bus, Train or Hotel bookings in one",
-	description: "Sotti Bookings is ticket booking service platform which offers Bus and Train ticket servicing along with Hotel bookings",
+	name: "Shotti Bookings - Your one-stop solution for Bus, Train, and Hotel reservations.",
+	description: "Shotti Bookings is ticket booking service platform which offers Bus and Train ticket servicing along with Hotel bookings",
 	navItems: [
 		{
 			label: "Home",
@@ -71,4 +71,5 @@ export const siteConfig = {
 	backendServer: {
 		address: "http://localhost:5000/api",
 	},
+	companyName: "Shotti Bookings",
 };

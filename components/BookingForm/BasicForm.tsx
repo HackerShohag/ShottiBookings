@@ -3,8 +3,24 @@
 import React, { useState, useEffect } from 'react';
 import { Select, SelectItem, Input, Button } from "@nextui-org/react";
 import { cities as citiesbd } from './data';
-import { BasicFormProps, FormData } from './Form';
 import { SelectorIcon } from "@/components/icons";
+
+export interface City {
+    id: string;
+    source: string;
+    destinations: string[];
+}
+
+export interface FormData {
+    origin: string;
+    destination: string;
+    date: string;
+    numberOfTickets: number;
+}
+
+export interface BasicFormProps {
+    onButtonClick: (() => void) | undefined;
+}
 
 export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
     const [formData, setFormData] = useState<FormData>({

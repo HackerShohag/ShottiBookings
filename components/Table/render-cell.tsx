@@ -4,7 +4,7 @@ import { DeleteIcon } from "../icons/table/delete-icon";
 import { EditIcon } from "../icons/table/edit-icon";
 import { EyeIcon } from "../icons/table/eye-icon";
 
-export interface AdminProps {
+export interface UserProps {
   bookedJourney: string[];
   id: string;
   name: string;
@@ -18,17 +18,18 @@ export interface AdminProps {
 }
 
 interface Props {
-  user: AdminProps;
+  user: UserProps;
   columnKey: string | React.Key;
   handlers?: {
     onDelete: (id: string) => void;
     onEdit: (id: string) => void;
     onDetails: (id: string) => void;
   };
+  userType: string;
 }
 
 
-export const RenderCell = ({ user, columnKey, handlers }: Props) => {
+export const RenderCell = ({ user, columnKey, handlers, userType }: Props) => {
 
   switch (columnKey) {
     case "name":
@@ -57,7 +58,7 @@ export const RenderCell = ({ user, columnKey, handlers }: Props) => {
           variant="flat"
           color="danger"
         >
-          <span className="capitalize text-xs">Admin</span>
+          <span className="capitalize text-xs">{userType}</span>
         </Chip>
       );
     case "status":

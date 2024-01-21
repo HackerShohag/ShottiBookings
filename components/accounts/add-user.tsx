@@ -32,7 +32,7 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
             {(onClose) => (
               <>
                 <ModalHeader className="flex flex-col gap-1">
-                  Add User
+                  Add {props.userType ? props.userType : "User"}
                 </ModalHeader>
                 <ModalBody>
                   <Input label="Email" variant="bordered" />
@@ -52,7 +52,7 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
                     Close
                   </Button>
                   <Button color="primary" onPress={onClose}>
-                    Add User
+                    Add {props.userType ? props.userType : "User"}
                   </Button>
                 </ModalFooter>
               </>

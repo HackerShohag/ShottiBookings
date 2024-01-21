@@ -20,7 +20,9 @@ function MultiStepPage({ MultiStepFormElements }: MultiStepPageProps) {
         address: "",
     })
 
-    const [activeTab, setActiveTab] = useState(0)
+    const [activeTab, setActiveTab] = useState(0);
+
+    const elementLenght = MultiStepFormElements?.length || 0;
 
     return (
         <div className='flex flex-col justify-center'>
@@ -30,9 +32,9 @@ function MultiStepPage({ MultiStepFormElements }: MultiStepPageProps) {
             >
                 <CardBody>
                     <Logo />
-                    <Progress className="mt-5 mb-5" size="lg" aria-label="Loading..." value={(100 / MultiStepFormElements.length) * activeTab} />
+                    <Progress className="mt-5 mb-5" size="lg" aria-label="Loading..." value={(100 / elementLenght) * activeTab} />
                     {
-                        MultiStepFormElements[activeTab]
+                        MultiStepFormElements?.[activeTab]
                     }
 
                     <div className='mr-5 ml-5 flex flex-wrap gap-x-6 justify-between'>
@@ -42,15 +44,15 @@ function MultiStepPage({ MultiStepFormElements }: MultiStepPageProps) {
                             className={`px-4 py-2 rounded-xl bg-blue-600 text-white ${activeTab === 0 ? "opacity-50 bg-slate-600 left" : "opacity-100"}`}>
                             Back
                         </Button>
-                        {activeTab === MultiStepFormElements.length - 1 ? (
+                        {activeTab === elementLenght - 1 ? (
                             <Button className='right px-4 py-2 rounded-xl bg-blue-600 text-white' onClick={() => console.log(data)}>
                                 Submit
                             </Button>
                         ) : (
                             <Button
-                                disabled={activeTab === MultiStepFormElements.length - 1}
+                                disabled={activeTab === elementLenght - 1}
                                 onClick={() => setActiveTab(prev => prev + 1)}
-                                className={`right px-4 py-2 rounded-xl bg-blue-600 text-white ${activeTab === MultiStepFormElements.length - 1 ? "opacity-50 bg-slate-600" : "opacity-100"
+                                className={`right px-4 py-2 rounded-xl bg-blue-600 text-white ${activeTab === elementLenght - 1 ? "opacity-50 bg-slate-600" : "opacity-100"
                                     }`}>
                                 Next
                             </Button>

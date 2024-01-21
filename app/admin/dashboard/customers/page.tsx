@@ -27,7 +27,7 @@ export default function AdminDashboard() {
                 </Card>
             ) : (
                 session?.user.role === 'admin' ? (
-                    <Accounts userType="bus" />
+                    <Accounts userType="customers" />
                 ) : (
                     <Card className="flex justify-center">
                         <CardHeader className="flex justify-center">Access Denied</CardHeader>
