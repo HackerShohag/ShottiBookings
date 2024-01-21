@@ -10,3 +10,14 @@ export type FormData = {
   date: string;
   numberOfTickets: number;
 }
+
+export type OfferedJourney = {
+  bus: {
+    no: string;
+    companyName: string;
+  };
+  slot: any[];
+  startTime: string;
+  from: string;
+  to: string;
+}

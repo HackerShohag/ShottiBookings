@@ -1,28 +1,23 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Select, SelectItem, Input, Button } from "@nextui-org/react";
+import { Select, SelectItem, Input, Button, Spinner } from "@nextui-org/react";
 
 import { FormData } from '@/types';
-import { cities as citiesbd } from './data';
 import { SelectorIcon } from "@/components/icons";
 
 export interface BasicFormProps {
-    onButtonClick: (() => void) | undefined;
+    formData: FormData;
+    routes: string[];
+    handleDataAvialblity: (f: boolean) => void;
+    handleChange: ((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void) | undefined;
 }
 
-export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
-    const [formData, setFormData] = useState<FormData>({
+export const BasicForm: React.FC<BasicFormProps> = ({ handleChange, formData, routes, handleDataAvialblity }) => {
+    const [route, setRoute] = useState({
         origin: '',
         destination: '',
-        date: '',
-        numberOfTickets: 1,
     });
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
-    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -40,27 +35,27 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
         const destination = searchParams.get('destination') || '';
         const date = searchParams.get('date') || '';
 
-        setFormData((prevData) => ({
+        setRoute((prevData) => ({
             ...prevData,
             origin,
             destination,
-            date,
         }));
-
-        fetch('src/assets/cities.json')
-            .then((response) => response.json())
-            .then((data) => {
-                if (!origin) {
-                    setFormData((prevData) => ({ ...prevData, origin: data[0]?.value }));
-                }
-            })
-            .catch((error) => console.error('Error fetching cities:', error));
     }, []);
+
+
+    useEffect(() => {
+        console.log
+        if (formData.origin && formData.destination && formData.date) {
+            handleDataAvialblity(true);
+        }
+    }, [formData.origin, formData.destination, formData.date, handleDataAvialblity]);
+
 
     return (
         <div className='booking-form-container'>
             <form onSubmit={handleSubmit}>
                 <Select
+                    isRequired
                     label="Select Source:"
                     placeholder="Select Source"
                     className="max-w-xs"
@@ -70,13 +65,14 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
                     value={formData.origin}
                     onChange={handleChange}
                 >
-                    {citiesbd.map((item) => (
-                        <SelectItem key={item.value} value={item.value}>
-                            {item.label}
+                    {routes.map((item) => (
+                        <SelectItem key={item} value={item}>
+                            {item}
                         </SelectItem>
                     ))}
                 </Select>
                 <Select
+                    isRequired
                     label="Select Destination:"
                     placeholder="Select Destination"
                     className="max-w-xs"
@@ -86,31 +82,25 @@ export const BasicForm: React.FC<BasicFormProps> = ({ onButtonClick }) => {
                     value={formData.destination}
                     onChange={handleChange}
                 >
-                    {citiesbd.map((item) => (
-                        <SelectItem key={item.value} value={item.value}>
-                            {item.label}
+                    {routes.map((item) => (
+                        <SelectItem key={item} value={item}>
+                            {item}
                         </SelectItem>
                     ))}
                 </Select>
-                <label htmlFor="date">Date:</label>
                 <Input
+                    labelPlacement='outside'
                     fullWidth
                     isRequired
+                    label="Date"
                     type="date"
-                    labelPlacement='outside'
                     min={minDate}
                     max={maxDate}
                     name="date"
                     value={formData.date}
                     onChange={handleChange}
                 />
-                <Button
-                    fullWidth
-                    type='submit'
-                >
-                    Check Route
-                </Button>
-            </form>
-        </div>
+            </form >
+        </div >
     );
 };

@@ -7,10 +7,12 @@ import Logo from "../../../components/Logo/Logo";
 import "@/components/Containers/styles.css";
 
 interface MultiStepPageProps {
+    nextButtonFunction: () => void;
+    nextButtonAvailable?: boolean;
     MultiStepFormElements?: JSX.Element[]
 }
 
-function MultiStepPage({ MultiStepFormElements }: MultiStepPageProps) {
+function MultiStepPage({ MultiStepFormElements, nextButtonAvailable, nextButtonFunction }: MultiStepPageProps) {
 
     const [data, setData] = useState({
         name: "",
@@ -41,24 +43,30 @@ function MultiStepPage({ MultiStepFormElements }: MultiStepPageProps) {
                         <Button
                             disabled={activeTab === 0}
                             onClick={() => setActiveTab(prev => prev - 1)}
-                            className={`px-4 py-2 rounded-xl bg-blue-600 text-white ${activeTab === 0 ? "opacity-50 bg-slate-600 left" : "opacity-100"}`}>
+                            variant={activeTab === 0 ? "flat" : "solid"}
+                        >
                             Back
                         </Button>
                         {activeTab === elementLenght - 1 ? (
-                            <Button className='right px-4 py-2 rounded-xl bg-blue-600 text-white' onClick={() => console.log(data)}>
+                            <Button
+                                className='right px-4 py-2 rounded-xl bg-blue-600 text-white'
+                                onClick={() => console.log(data)}>
                                 Submit
                             </Button>
                         ) : (
                             <Button
-                                disabled={activeTab === elementLenght - 1}
-                                onClick={() => setActiveTab(prev => prev + 1)}
-                                className={`right px-4 py-2 rounded-xl bg-blue-600 text-white ${activeTab === elementLenght - 1 ? "opacity-50 bg-slate-600" : "opacity-100"
-                                    }`}>
+                                isDisabled={!nextButtonAvailable}
+                                variant={!nextButtonAvailable ? "flat" : "solid"}
+                                color={!nextButtonAvailable ? "default" : "primary"}
+                                onClick={() => {
+                                    setActiveTab(prev => prev + 1);
+                                    nextButtonFunction();
+                                }}
+                            >
                                 Next
                             </Button>
                         )}
                     </div>
-
                 </CardBody>
             </Card>
         </div>
