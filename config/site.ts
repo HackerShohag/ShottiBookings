@@ -69,7 +69,7 @@ export const siteConfig = {
 		register: "/register",
 	},
 	backendServer: {
-		address: process.env.BACKEND_SERVER || "http://localhost:5000/api",
+		address: "https://ticket-booking-system-pi.vercel.app/api",
 	},
 	companyName: "Shotti Bookings",
 };

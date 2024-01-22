@@ -1,24 +1,12 @@
 import { User, Tooltip, Chip } from "@nextui-org/react";
+import { BusType } from "@/types";
 import React from "react";
 import { DeleteIcon } from "../icons/table/delete-icon";
 import { EditIcon } from "../icons/table/edit-icon";
 import { EyeIcon } from "../icons/table/eye-icon";
 
-export interface UserProps {
-  bookedJourney: string[];
-  id: string;
-  name: string;
-  user: string;
-  gender: string;
-  dateOfBirth: string;
-  email: string;
-  contactNo: string;
-  address: string;
-  isDeleted: boolean;
-}
-
 interface Props {
-  user: UserProps;
+  user: BusType;
   columnKey: string | React.Key;
   handlers?: {
     onDelete: (id: string) => void;
@@ -29,29 +17,29 @@ interface Props {
 }
 
 
-export const RenderCell = ({ user, columnKey, handlers, userType }: Props) => {
+export const RenderBusCell = ({ user, columnKey, handlers, userType }: Props) => {
 
   switch (columnKey) {
-    case "name":
+    case "companyName":
       return (
         <User
-          name={user.name}
+          name={user.companyName}
         >
-          {user.name}
+          {user.companyName}
         </User>
       );
-    case "email":
+    case "no":
       return (
         <div>
           <div>
-            <span>{user.email}</span>
+            <span>{user.no}</span>
           </div>
           <div>
-            <span>{user.address}</span>
+            <span>{user.no}</span>
           </div>
         </div>
       );
-    case "role":
+    case "capacity":
       return (
         <Chip
           size="sm"
@@ -61,16 +49,16 @@ export const RenderCell = ({ user, columnKey, handlers, userType }: Props) => {
           <span className="capitalize text-xs">{userType}</span>
         </Chip>
       );
-    case "status":
+    case "seats":
       return (
         <Chip
           size="sm"
           variant="flat"
           color={
-            user.isDeleted ? "danger" : "success"
+            user.capacity ? "danger" : "success"
           }
         >
-          <span className="capitalize text-xs">{user.isDeleted ? "Deteled" : "Active"}</span>
+          <span className="capitalize text-xs">{user.capacity ? "Deteled" : "Active"}</span>
         </Chip>
       );
 
@@ -79,14 +67,14 @@ export const RenderCell = ({ user, columnKey, handlers, userType }: Props) => {
         <div className="flex items-center gap-4 ">
           <div>
             <Tooltip content="Details">
-              <button onClick={() => handlers?.onDetails(user.id)}>
+              <button onClick={() => handlers?.onDetails(user._id)}>
                 <EyeIcon size={20} fill="#979797" />
               </button>
             </Tooltip>
           </div>
           <div>
             <Tooltip content="Edit user" color="secondary">
-              <button onClick={() => handlers?.onEdit(user.id)}>
+              <button onClick={() => handlers?.onEdit(user._id)}>
                 <EditIcon size={20} fill="#979797" />
               </button>
             </Tooltip>
@@ -95,7 +83,7 @@ export const RenderCell = ({ user, columnKey, handlers, userType }: Props) => {
             <Tooltip
               content="Delete user"
               color="danger"
-              onClick={() => handlers?.onDelete(user.id)}
+              onClick={() => handlers?.onDelete(user._id)}
             >
               <button>
                 <DeleteIcon size={20} fill="#FF0080" />

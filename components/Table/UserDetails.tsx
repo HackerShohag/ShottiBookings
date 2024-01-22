@@ -1,8 +1,8 @@
 import { Textarea } from "@nextui-org/react";
-import { UserProps } from "@/components/Table/render-cell";
+import { MemberType } from "@/types";
 
 interface UserDetailsProps {
-    userProps: UserProps | undefined;
+    userProps: MemberType | undefined;
 }
 
 const UserDetails = (props: UserDetailsProps) => {

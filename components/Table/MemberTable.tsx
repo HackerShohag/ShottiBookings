@@ -21,8 +21,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { siteConfig } from '@/config/site';
 import { useSession } from 'next-auth/react';
+import { MemberType } from "@/types";
 
-import { RenderCell, UserProps } from "./render-cell";
+import { RenderMemberCell } from "./render-member-cell";
 import UserDetails from "./UserDetails";
 import UserDetailsEdit from "./UserDetailsEdit";
 
@@ -30,11 +31,11 @@ interface AccountsProps {
   userType: string;
 }
 
-export const TableWrapper = (props: AccountsProps) => {
+export const MemberTable = (props: AccountsProps) => {
   const { data: session, status } = useSession();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const [users, setUsers] = useState<UserProps[]>([]);
+  const [users, setUsers] = useState<MemberType[]>([]);
   const [userId, setUserId] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [processing, setProcessing] = useState(false);
@@ -49,6 +50,15 @@ export const TableWrapper = (props: AccountsProps) => {
     bus: "B",
     offeredJourney: "J",
   }[props.userType] || "C";
+
+  const userAPI = {
+    admins: "user",
+    operators: "user",
+    drivers: "user",
+    customers: "user",
+    bus: "bus",
+    offeredJourney: "offered-journey",
+  }[props.userType] || "customer";
 
   const columns = [
     { name: 'NAME', uid: 'name' },
@@ -75,7 +85,7 @@ export const TableWrapper = (props: AccountsProps) => {
     }
   };
 
-  const updateUser = (userData: UserProps) => {
+  const updateUser = (userData: MemberType) => {
     setEditProcessing(true);
     const response = fetch(siteConfig.backendServer.address + '/user/update-' + props.userType, {
       method: 'POST',
@@ -101,7 +111,7 @@ export const TableWrapper = (props: AccountsProps) => {
 
   useEffect(() => {
     setProcessing(true);
-    const response = fetch(siteConfig.backendServer.address + '/user/get-' + props.userType, {
+    const response = fetch(siteConfig.backendServer.address + '/' + userAPI + '/get-' + props.userType, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -112,6 +122,7 @@ export const TableWrapper = (props: AccountsProps) => {
       .then(data => {
         if (data?.data?.length > 0) {
           setUsers(data?.data);
+          console.log(data?.data);
           setNoUserFound(false);
         } else {
           setNoUserFound(true);
@@ -119,7 +130,7 @@ export const TableWrapper = (props: AccountsProps) => {
         setProcessing(false);
       })
       .catch(err => console.log(err))
-  }, [props.userType, session?.accessToken])
+  }, [props.userType, session?.accessToken, userAPI])
 
   return (
     <>
@@ -161,7 +172,7 @@ export const TableWrapper = (props: AccountsProps) => {
                       <TableRow>
                         {(columnKey) => (
                           <TableCell>
-                            {RenderCell({ user: item, columnKey: columnKey, handlers: handlers, userType: props.userType })}
+                            {RenderMemberCell({ user: item, columnKey: columnKey, handlers: handlers, userType: props.userType })}
                           </TableCell>
                         )}
                       </TableRow>

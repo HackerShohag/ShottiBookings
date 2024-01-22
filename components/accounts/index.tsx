@@ -2,8 +2,9 @@
 import { Button, Input } from "@nextui-org/react";
 import React from "react";
 import { ExportIcon } from "@/components/icons/accounts/export-icon";
-import { AddUser } from "./add-user";
-import { TableWrapper } from "@/components/Table/table";
+import { AddUser } from "@/components/accounts/add-user";
+import { MemberTable } from "@/components/Table/MemberTable";
+import { BusTable } from "@/components/Table/BusTable";
 
 interface AccountsProps {
   userType: string;
@@ -31,7 +32,11 @@ export const Accounts = (props: AccountsProps) => {
         </div>
       </div>
       <div className="max-w-[95rem] mx-auto w-full">
-        <TableWrapper userType={props.userType} />
+        {
+          props.userType === 'bus' ?
+            <BusTable userType={props.userType} /> :
+            <MemberTable userType={props.userType} />
+        }
       </div>
     </div>
   );

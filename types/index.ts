@@ -21,3 +21,25 @@ export type OfferedJourney = {
   from: string;
   to: string;
 }
+
+export type MemberType = {
+  bookedJourney: string[];
+  id: string;
+  name: string;
+  user: string;
+  gender: string;
+  dateOfBirth: string;
+  email: string;
+  contactNo: string;
+  address: string;
+  isDeleted: boolean;
+}
+
+export type BusType = {
+  _id: string;
+  companyName: string;
+  no: string;
+  capacity: number;
+  slot: string[];
+  __v: number;
+};

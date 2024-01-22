@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Button, Input, Spacer, Select, SelectItem } from "@nextui-org/react";
-import { UserProps } from "@/components/Table/render-cell";
+import { MemberType } from "@/types";
 
 interface UserDetailsProps {
-    userProps: UserProps | undefined;
-    onSubmit: (data: UserProps) => boolean | Promise<boolean>;
+    userProps: MemberType | undefined;
+    onSubmit: (data: MemberType) => boolean | Promise<boolean>;
 }
 
 const UserDetailsEdit = (props: UserDetailsProps) => {
