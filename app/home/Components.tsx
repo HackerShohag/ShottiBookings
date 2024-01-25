@@ -13,12 +13,11 @@ const serviceContainerStyle = {
     width: '250px',
 };
 
-
 export function BusComponent() {
     const router = useRouter();
 
     return (
-        <SolidContainer className='clickable' height={serviceContainerStyle.height} width={serviceContainerStyle.width}>
+        <SolidContainer className='clickable'>
             <div className='logo-container' onClick={() => {
                 router.push('/bus');
             }}
@@ -30,9 +29,8 @@ export function BusComponent() {
     )
 }
 export function HotelComponent() {
-
     return (
-        <SolidContainer className='clickable' height={serviceContainerStyle.height} width={serviceContainerStyle.width}>
+        <SolidContainer className='clickable'>
             <div className="logo-container" onClick={() => { alert("This service is coming soon!") }}>
                 <Image className="logo-image" src={hotelLogo} alt="Hotel Logo" />
                 <h2 className='m-2'>Hotel Booking</h2>
@@ -44,7 +42,7 @@ export function HotelComponent() {
 
 export function TrainComponent() {
     return (
-        <SolidContainer className='clickable' height={serviceContainerStyle.height} width={serviceContainerStyle.width}>
+        <SolidContainer className='clickable'>
             <div className="logo-container" onClick={() => { alert("This service is coming soon!") }}>
                 <Image className="logo-image" src={trainLogo} alt="Train Logo" />
                 <h2 className='m-2'>Train Ticket Booking</h2>

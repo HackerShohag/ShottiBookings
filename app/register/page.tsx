@@ -4,9 +4,10 @@ import React, { useState, useEffect, FormEvent } from "react";
 import { Input, Button, Card, Select, SelectItem, Link, useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Spinner } from "@nextui-org/react";
 import { MailIcon, PasswordIcon, LoadingIcon } from '@/app/login/Icons'
 import { useRouter } from 'next/navigation';
-import { SelectorIcon, UserIcon, PhoneIcon, GenderIcon } from "@/components/icons";
+import { SelectorIcon, UserIcon, PhoneIcon, GenderIcon, ShowPassIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 import { useSession } from "next-auth/react";
+import ShowHidePassword from "@/components/ShowHidePassword";
 
 export interface RegisterFormData {
     password: string;
@@ -49,6 +50,9 @@ export default function RegisterForm() {
     const [redirectTimer, setRedirectTimer] = useState(5);
     const [errorMessage, setErrorMessage] = useState("");
     const [isError, setIsError] = useState(false);
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     useEffect(() => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -292,16 +296,15 @@ export default function RegisterForm() {
                             </Select>
 
                             <Input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 label="Password:"
                                 name="password"
-                                placeholder="********"
+                                placeholder={showPassword ? "password" : "********"}
                                 labelPlacement="outside"
                                 isInvalid={isInvalid}
                                 errorMessage={passwordError}
-                                startContent={
-                                    <PasswordIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                                }
+                                startContent={<PasswordIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />}
+                                endContent={<ShowHidePassword onClick={setShowPassword} />}
                                 fullWidth
                                 isRequired
                                 value={password}
@@ -309,16 +312,15 @@ export default function RegisterForm() {
                                 onFocusChange={() => setPasswordFocusChanged(true)}
                             />
                             <Input
-                                type="password"
+                                type={showConfirmPassword ? "text" : "password"}
                                 label="Confirm Password:"
                                 name="confirmPassword"
-                                placeholder="********"
+                                placeholder={showConfirmPassword ? "password" : "********"}
                                 labelPlacement="outside"
                                 isInvalid={isInvalid}
-                                errorMessage={confirmPasswordError} // Added confirm password error message
-                                startContent={
-                                    <PasswordIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                                }
+                                errorMessage={confirmPasswordError}
+                                startContent={<PasswordIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />}
+                                endContent={<ShowHidePassword onClick={setShowConfirmPassword} />}
                                 fullWidth
                                 isRequired
                                 value={confirmPassword}

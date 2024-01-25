@@ -1,9 +1,9 @@
 'use client';
 
-import Content from "@/components/Dashboard/AdminContent";
 import { Button, Card, CardBody, CardFooter, CardHeader, CircularProgress } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Accounts } from "@/components/accounts";
 
 export default function AdminDashboard() {
     const { data: session, status } = useSession();
@@ -27,14 +27,7 @@ export default function AdminDashboard() {
                 </Card>
             ) : (
                 session?.user.role === 'admin' ? (
-                    <Card>
-                        <CardHeader className="flex justify-center text-2xl">Bus Schedules</CardHeader>
-                        <CardBody>
-                            <CardBody className="flex justify-center items-center">
-                                <p>This feature is coming soon. Stay tuned for updates!</p>
-                            </CardBody>
-                        </CardBody>
-                    </Card>
+                    <Accounts userType="modarators" />
                 ) : (
                     <Card className="flex justify-center">
                         <CardHeader className="flex justify-center">Access Denied</CardHeader>

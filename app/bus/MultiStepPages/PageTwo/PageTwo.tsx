@@ -1,11 +1,12 @@
 "use client";
 
 import { Card, CardBody, CardHeader, CircularProgress } from "@nextui-org/react";
-import { OfferedJourney } from "@/types";
+import { FormData, OfferedJourney } from "@/types";
 import BusInfo from "@/components/BusInfo/BusInfo";
 import "./PageTwo.css";
 
 import busImg from "@/public/assets/bus.png";
+import { useState } from "react";
 
 interface BasicFormProps {
   offeredJourney: OfferedJourney[];
@@ -45,6 +46,18 @@ const renderOfferedJourney = (journeys: OfferedJourney[], onButtonClick: (() => 
 }
 
 const PageTwo = ({ offeredJourney, onButtonClick, processing }: BasicFormProps) => {
+
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const source = urlSearchParams.get('source');
+  const destination = urlSearchParams.get('destination');
+  const date = urlSearchParams.get('date');
+
+  const [formData, setFormData] = useState<FormData>({
+    origin: source || '',
+    destination: destination || '',
+    date: date || '',
+    numberOfTickets: 0,
+  });
 
   return (
     <div className="mr-2 ml-2">

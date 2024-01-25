@@ -78,6 +78,12 @@ export const AdminSidebarWrapper = () => {
                   />
                   <SidebarItem
                     isActive={pathname === ""}
+                    title="Bus Operators"
+                    icon={<PaymentsIcon />}
+                    href="/admin/dashboard/bus-operators"
+                  />
+                  <SidebarItem
+                    isActive={pathname === ""}
                     title="Customers"
                     icon={<ReportsIcon />}
                     href="/admin/dashboard/customers"
@@ -98,7 +104,7 @@ export const AdminSidebarWrapper = () => {
                     isActive={pathname === ""}
                     title="Drivers"
                     icon={<FilterIcon />}
-                    href="/admin/dashboard/schedules"
+                    href="/admin/dashboard/drivers"
                   />
                 </SidebarMenu>
               </div>

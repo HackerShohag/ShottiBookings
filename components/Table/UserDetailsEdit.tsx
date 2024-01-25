@@ -34,10 +34,7 @@ const UserDetailsEdit = (props: UserDetailsProps) => {
         { label: "Name:", value: formData.name, placeholder: "No User Name", field: "name" },
         { label: "Email:", value: formData.email, placeholder: "No User Mail", field: "email" },
         { label: "Phone Number:", value: formData.contactNo, placeholder: "No Phone Number", field: "contactNo" },
-        { label: "Address:", value: formData.address, placeholder: "Address Not Defined", field: "address" },
         { label: "Gender:", value: formData.gender.charAt(0).toUpperCase() + formData.gender.slice(1), placeholder: "Gender Not Defined", field: "gender" },
-        { label: "Date of Birth:", value: formData.dateOfBirth, placeholder: "Date of Birth Not Defined", field: "dateOfBirth" },
-        { label: "Travelled Journeys:", value: formData.dateOfBirth, placeholder: "No Travelled Journeys", field: "travelledJourneys" },
     ];
 
     return (

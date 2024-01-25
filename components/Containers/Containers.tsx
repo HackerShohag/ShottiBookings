@@ -31,7 +31,7 @@ export const BorderContainer = (props: Props) => {
     };
 
     return (
-        <div className={`border-container ${props.className}`} style={containerStyle}>
+        <div className={`App border-container ${props.className}`} style={containerStyle}>
             {props.children}
         </div>
     )

@@ -5,6 +5,7 @@ import { Input, Button, Card, Link, Modal, ModalContent, ModalHeader, ModalBody,
 import { MailIcon, PasswordIcon } from './Icons';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import ShowHidePassword from "@/components/ShowHidePassword";
 
 export default function LoginForm() {
     const router = useRouter();
@@ -17,6 +18,8 @@ export default function LoginForm() {
     const [isError, setIsError] = useState(false);
     const [processing, setProcessing] = useState(false);
     const [redirectTimer, setRedirectTimer] = useState(3);
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -109,14 +112,13 @@ export default function LoginForm() {
                                 onChange={(e) => setUsername(e.target.value)}
                             />
                             <Input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 label="Password"
                                 name="password"
-                                placeholder="********"
+                                placeholder={showPassword ? "password" : "********"}
                                 labelPlacement="outside"
-                                startContent={
-                                    <PasswordIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                                }
+                                startContent={<PasswordIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />}
+                                endContent={<ShowHidePassword onClick={setShowPassword} />}
                                 fullWidth
                                 isRequired
                                 value={password}

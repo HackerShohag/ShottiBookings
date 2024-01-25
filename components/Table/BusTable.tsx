@@ -9,7 +9,6 @@ import {
   ModalFooter,
   ModalHeader,
   Spinner,
-  Tab,
   Table,
   TableBody,
   TableCell,
@@ -43,28 +42,20 @@ export const BusTable = (props: AccountsProps) => {
   const [noUserFound, setNoUserFound] = useState(false);
 
   const userTypeReplace = {
-    admins: "A",
-    operators: "O",
-    drivers: "D",
-    customers: "C",
     bus: "B",
     offeredJourney: "J",
   }[props.userType] || "C";
 
   const userAPI = {
-    admins: "user",
-    operators: "user",
-    drivers: "user",
-    customers: "user",
     bus: "bus",
-    offeredJourney: "offered-journey",
-  }[props.userType] || "customer";
+    offeredJourney: "offeredJourney",
+  }[props.userType] || "user";
 
   const columns = [
     { name: 'COMPANY NAME', uid: 'companyName' },
     { name: 'NUMBER', uid: 'no' },
     { name: 'CAPACITY', uid: 'capacity' },
-    { name: 'SEATS', uid: 'seats' },
+    // { name: 'SEATS', uid: 'seats' },
     { name: 'ACTIONS', uid: 'actions' },
   ]
 
@@ -131,6 +122,8 @@ export const BusTable = (props: AccountsProps) => {
         setProcessing(false);
       })
       .catch(err => console.log(err))
+    // console.log('Buses');
+    // console.log(buses);
   }, [props.userType, session?.accessToken, userAPI])
 
   return (
@@ -169,33 +162,15 @@ export const BusTable = (props: AccountsProps) => {
                     )}
                   </TableHeader>
                   <TableBody items={buses}>
-                    {/* {(item) => (
-                      <TableRow>
+                    {(item) => (
+                      <TableRow key={item._id}>
                         {(columnKey) => (
-                          <TableCell>
+                          <TableCell key={columnKey}>
                             {RenderBusCell({ user: item, columnKey: columnKey, handlers: handlers, userType: props.userType })}
-                            <p>{item.companyName}</p>
                           </TableCell>
                         )}
                       </TableRow>
-                    )} */}
-                    <TableRow>
-                      <TableCell>
-                        {buses[0].companyName}
-                      </TableCell>
-                      <TableCell>
-                        {buses[0].no}
-                      </TableCell>
-                      <TableCell>
-                        {buses[0].capacity}
-                      </TableCell>
-                      <TableCell>
-                        {buses[0].slot}
-                      </TableCell>
-                      <TableCell>
-                        <p>Actions</p>
-                      </TableCell>
-                    </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               )}

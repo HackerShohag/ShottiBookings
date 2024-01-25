@@ -28,10 +28,8 @@ export type MemberType = {
   name: string;
   user: string;
   gender: string;
-  dateOfBirth: string;
   email: string;
   contactNo: string;
-  address: string;
   isDeleted: boolean;
 }
 

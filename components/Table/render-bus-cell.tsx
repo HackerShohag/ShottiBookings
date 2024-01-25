@@ -30,37 +30,16 @@ export const RenderBusCell = ({ user, columnKey, handlers, userType }: Props) =>
       );
     case "no":
       return (
-        <div>
-          <div>
-            <span>{user.no}</span>
-          </div>
-          <div>
-            <span>{user.no}</span>
-          </div>
-        </div>
+        <span>{user.no}</span>
       );
     case "capacity":
       return (
-        <Chip
-          size="sm"
-          variant="flat"
-          color="danger"
-        >
-          <span className="capitalize text-xs">{userType}</span>
-        </Chip>
+        <span>{user.capacity}</span>
       );
-    case "seats":
-      return (
-        <Chip
-          size="sm"
-          variant="flat"
-          color={
-            user.capacity ? "danger" : "success"
-          }
-        >
-          <span className="capitalize text-xs">{user.capacity ? "Deteled" : "Active"}</span>
-        </Chip>
-      );
+    // case "seats":
+    //   return (
+    //     <span>{user.slot}</span>
+    //   );
 
     case "actions":
       return (

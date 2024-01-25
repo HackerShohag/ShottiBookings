@@ -17,6 +17,16 @@ export interface PageOneProps {
 }
 
 const PageOne = ({ handleChange, routes, formData, processing, handleDataAvialblity }: PageOneProps) => {
+
+  const searchParams = new URLSearchParams();
+
+  const params: string[] = [];
+  searchParams.forEach((value, key) => {
+    params.push(`${value}`);
+  });
+
+  console.log(params);
+
   return (
     <BorderContainer>
       {

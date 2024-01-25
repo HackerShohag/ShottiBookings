@@ -12,7 +12,7 @@ import { siteConfig } from "@/config/site";
 
 const BusService = () => {
 
-    const [formDataSetted, setFormDataSetted] = useState(false);
+    const [isNextButtonAvailable, setIsNextButtonAvailable] = useState(false);
     const [processing, setProcessing] = useState(false);
     const [routes, setRoutes] = useState<string[]>([]);
     const [offeredJourney, setOfferedJourney] = useState<OfferedJourney[]>([]);
@@ -26,10 +26,21 @@ const BusService = () => {
     });
 
     const searchParams = new URLSearchParams();
+
+
+    // // get data from search params for source, destination and date
+    // const urlSearchParams = new URLSearchParams(window.location.search);
+    // const source = urlSearchParams.get('source');
+    // const destination = urlSearchParams.get('destination');
+    // const date = urlSearchParams.get('date');
+    // // set data to form data
+    // setFormData((prevData) => ({ ...prevData, origin: source || '', destination: destination || '', date: date || '' }));
+
+
     searchParams.set('source', formData.origin);
     searchParams.set('destination', formData.destination);
     searchParams.set('date', formData.date);
-    // window.history.pushState({}, '', `?${searchParams.toString()}`);
+    window.history.pushState({}, '', `?${searchParams.toString()}`);
 
     useEffect(() => {
         setProcessing(true);
@@ -71,6 +82,7 @@ const BusService = () => {
         }
         fetchOfferedJourney();
         setProcessing(false);
+        setIsNextButtonAvailable(false);
     }
 
     const handlePageOneChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -79,13 +91,13 @@ const BusService = () => {
     }
 
     const formElements = [
-        <PageOne key="pageOne" processing={processing} routes={routes} formData={formData} handleChange={handlePageOneChange} handleDataAvialblity={(f: boolean) => { setFormDataSetted(f) }} />,
-        < PageTwo key="pageTwo" processing={processing} offeredJourney={offeredJourney} onButtonClick={undefined} />,
+        <PageOne key="pageOne" processing={processing} routes={routes} formData={formData} handleChange={handlePageOneChange} handleDataAvialblity={setIsNextButtonAvailable} />,
+        <PageTwo key="pageTwo" processing={processing} offeredJourney={offeredJourney} onButtonClick={undefined} />,
         <PageThree key="pageThree" />
     ]
 
     return (
-        <MultiStepPage MultiStepFormElements={formElements} nextButtonAvailable={formDataSetted} nextButtonFunction={nextButtonFunction} />
+        <MultiStepPage MultiStepFormElements={formElements} nextButtonAvailable={isNextButtonAvailable} nextButtonFunction={nextButtonFunction} />
     )
 }
 

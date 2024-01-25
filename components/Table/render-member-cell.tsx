@@ -31,14 +31,7 @@ export const RenderMemberCell = ({ user, columnKey, handlers, userType }: Props)
       );
     case "email":
       return (
-        <div>
-          <div>
-            <span>{user.email}</span>
-          </div>
-          <div>
-            <span>{user.address}</span>
-          </div>
-        </div>
+        <span>{user.email}</span>
       );
     case "role":
       return (

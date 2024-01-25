@@ -3,7 +3,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -47,17 +46,15 @@ export const MemberTable = (props: AccountsProps) => {
     operators: "O",
     drivers: "D",
     customers: "C",
-    bus: "B",
-    offeredJourney: "J",
+    moderators: "M",
   }[props.userType] || "C";
 
-  const userAPI = {
-    admins: "user",
-    operators: "user",
-    drivers: "user",
-    customers: "user",
-    bus: "bus",
-    offeredJourney: "offered-journey",
+  const user = {
+    admins: "admin",
+    operators: "operator",
+    drivers: "driver",
+    customers: "customer",
+    moderators: "moderator",
   }[props.userType] || "customer";
 
   const columns = [
@@ -87,7 +84,7 @@ export const MemberTable = (props: AccountsProps) => {
 
   const updateUser = (userData: MemberType) => {
     setEditProcessing(true);
-    const response = fetch(siteConfig.backendServer.address + '/user/update-' + props.userType, {
+    const response = fetch(siteConfig.backendServer.address + '/user/update-' + user + session?.user.id, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -111,7 +108,7 @@ export const MemberTable = (props: AccountsProps) => {
 
   useEffect(() => {
     setProcessing(true);
-    const response = fetch(siteConfig.backendServer.address + '/' + userAPI + '/get-' + props.userType, {
+    const response = fetch(siteConfig.backendServer.address + '/user/get-' + props.userType, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -130,7 +127,7 @@ export const MemberTable = (props: AccountsProps) => {
         setProcessing(false);
       })
       .catch(err => console.log(err))
-  }, [props.userType, session?.accessToken, userAPI])
+  }, [props.userType, session?.accessToken])
 
   return (
     <>
@@ -145,7 +142,7 @@ export const MemberTable = (props: AccountsProps) => {
               {noUserFound ? (
                 <CardBody className="flex justify-center items-center">
                   <CardHeader className="flex justify-center items-center" style={{ color: 'red' }}>
-                    <h3 className="text-xl font-semibold">No {props.userType.charAt(0).toUpperCase() + props.userType.slice(1)}s Found</h3>
+                    <h3 className="text-xl font-semibold">No {user.charAt(0).toUpperCase() + user.slice(1)}s Found</h3>
                   </CardHeader>
                   <div className="flex flex-col gap-4 items-center">
                     <p>
@@ -169,7 +166,7 @@ export const MemberTable = (props: AccountsProps) => {
                   </TableHeader>
                   <TableBody items={users}>
                     {(item) => (
-                      <TableRow>
+                      <TableRow key={item.id}>
                         {(columnKey) => (
                           <TableCell>
                             {RenderMemberCell({ user: item, columnKey: columnKey, handlers: handlers, userType: props.userType })}

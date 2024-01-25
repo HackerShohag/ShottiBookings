@@ -5,10 +5,6 @@ export const siteConfig = {
 	description: "Shotti Bookings is ticket booking service platform which offers Bus and Train ticket servicing along with Hotel bookings",
 	navItems: [
 		{
-			label: "Home",
-			href: "/",
-		},
-		{
 			label: "Bus",
 			href: "/bus",
 		},
@@ -23,6 +19,14 @@ export const siteConfig = {
 		{
 			label: "About",
 			href: "/about",
+		},
+		{
+			label: "Terms",
+			href: "/terms",
+		},
+		{
+			label: "FAQs",
+			href: "/faqs",
 		}
 	],
 	navMenuItems: [
@@ -41,6 +45,18 @@ export const siteConfig = {
 		{
 			label: "Train",
 			href: "/train",
+		},
+		{
+			label: "About",
+			href: "/about",
+		},
+		{
+			label: "Terms",
+			href: "/terms",
+		},
+		{
+			label: "FAQs",
+			href: "/faqs",
 		},
 	],
 	navMenuUserItems: [
@@ -69,7 +85,7 @@ export const siteConfig = {
 		register: "/register",
 	},
 	backendServer: {
-		address: "https://ticket-booking-system-pi.vercel.app/api",
+		address: "https://booking-system-phi.vercel.app/api",
 	},
 	companyName: "Shotti Bookings",
 };

@@ -56,8 +56,8 @@ export const BasicForm: React.FC<BasicFormProps> = ({ handleChange, formData, ro
             <form onSubmit={handleSubmit}>
                 <Select
                     isRequired
-                    label="Select Source:"
-                    placeholder="Select Source"
+                    label="From:"
+                    placeholder="Select From"
                     className="max-w-xs"
                     labelPlacement="outside"
                     selectorIcon={<SelectorIcon />}
@@ -72,9 +72,10 @@ export const BasicForm: React.FC<BasicFormProps> = ({ handleChange, formData, ro
                     ))}
                 </Select>
                 <Select
+                    isDisabled={!formData.origin}
                     isRequired
-                    label="Select Destination:"
-                    placeholder="Select Destination"
+                    label="To:"
+                    placeholder="Select To"
                     className="max-w-xs"
                     labelPlacement="outside"
                     selectorIcon={<SelectorIcon />}
@@ -82,13 +83,16 @@ export const BasicForm: React.FC<BasicFormProps> = ({ handleChange, formData, ro
                     value={formData.destination}
                     onChange={handleChange}
                 >
-                    {routes.map((item) => (
-                        <SelectItem key={item} value={item}>
-                            {item}
-                        </SelectItem>
-                    ))}
+                    {routes
+                        .filter((item) => item !== formData.origin)
+                        .map((item) => (
+                            <SelectItem key={item} value={item}>
+                                {item}
+                            </SelectItem>
+                        ))}
                 </Select>
                 <Input
+                    isDisabled={!formData.destination || !formData.origin}
                     labelPlacement='outside'
                     fullWidth
                     isRequired
