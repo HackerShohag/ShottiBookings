@@ -6,8 +6,8 @@ const FAQ = () => {
   return (
     <div>
       <Card >
-        <CardHeader>
-          Frequently Asked Questions (FAQ)
+        <CardHeader className='flex justify-center text-3xl'>
+          Frequently Asked Questions (FAQs)
         </CardHeader>
 
         <CardBody>

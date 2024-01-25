@@ -40,7 +40,9 @@ const BusService = () => {
     searchParams.set('source', formData.origin);
     searchParams.set('destination', formData.destination);
     searchParams.set('date', formData.date);
-    window.history.pushState({}, '', `?${searchParams.toString()}`);
+    if (typeof window !== 'undefined') {
+        window.history.pushState({}, '', `?${searchParams.toString()}`);
+    }
 
     useEffect(() => {
         setProcessing(true);
