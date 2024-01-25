@@ -59,7 +59,7 @@ export const MemberTable = (props: AccountsProps) => {
 
   const columns = [
     { name: 'NAME', uid: 'name' },
-    { name: 'EMAIL & ADDRESS', uid: 'email' },
+    { name: 'EMAIL', uid: 'email' },
     { name: 'TYPE', uid: 'role' },
     { name: 'STATUS', uid: 'status' },
     { name: 'ACTIONS', uid: 'actions' },

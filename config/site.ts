@@ -29,6 +29,56 @@ export const siteConfig = {
 			href: "/faqs",
 		}
 	],
+	navAdminItems: [
+		{
+			label: "Admins",
+			href: "/admin/dashboard/admins",
+		},
+		{
+			label: "Operators",
+			href: "/admin/dashboard/operators",
+		},
+		{
+			label: "Bus Operators",
+			href: "/admin/dashboard/bus-operators",
+		},
+		{
+			label: "Customers",
+			href: "/admin/dashboard/customers",
+		},
+		{
+			label: "Buses",
+			href: "/admin/dashboard/buses",
+		},
+		{
+			label: "Bus Schedules",
+			href: "/admin/dashboard/schedules",
+		},
+		{
+			label: "Drivers",
+			href: "/admin/dashboard/drivers",
+		}
+	],
+	navOperatorItems: [
+		{
+			label: "Bus",
+			href: "/accounts",
+		},
+		{
+			label: "Add Schedule",
+			href: "/accounts",
+		}
+	],
+	navModeratorItems: [
+		{
+			label: "Bus",
+			href: "/accounts",
+		},
+		{
+			label: "Add Route",
+			href: "/accounts",
+		}
+	],
 	navMenuItems: [
 		{
 			label: "Home",

@@ -10,9 +10,7 @@ import {
 	NavbarMenuItem,
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
 import { Link } from "@nextui-org/link";
-import { Input } from "@nextui-org/input";
 
 import { link as linkStyles } from "@nextui-org/theme";
 
@@ -21,39 +19,17 @@ import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
 
-import {
-	CompanyLogo,
-	SearchIcon,
-} from "@/components/icons";
+import { CompanyLogo } from "@/components/icons";
 import LogOutPage, { LogOutButton } from "@/app/logout/logout";
 import React from "react";
-import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
+import { Listbox, ListboxItem, ListboxSection, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
+import ListboxWrapper from "./ListboxWrapper";
 
 export const Navbar = () => {
 
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const { data: session, status } = useSession();
-
-	const searchInput = (
-		<Input
-			aria-label="Search"
-			classNames={{
-				inputWrapper: "bg-default-100",
-				input: "text-sm",
-			}}
-			endContent={
-				<Kbd className="hidden lg:inline-block" keys={["command"]}>
-				</Kbd>
-			}
-			labelPlacement="outside"
-			placeholder="Search..."
-			startContent={
-				<SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-			}
-			type="search"
-		/>
-	);
 
 	return (
 		<>
@@ -87,7 +63,6 @@ export const Navbar = () => {
 					className="hidden sm:flex basis-1/5 sm:basis-full"
 					justify="end"
 				>
-					<NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
 					{session ? (
 						<>
 							<NavbarItem className="hidden md:flex">
@@ -135,65 +110,117 @@ export const Navbar = () => {
 				</NavbarContent>
 
 				<NavbarMenu>
-					{searchInput}
-					<div className="mx-4 mt-2 flex flex-col gap-2">
-						{siteConfig.navMenuItems.map((item, index) => (
-							<NavbarMenuItem key={`${item}-${index}`}>
-								<Link
-									color={"foreground"}
-									href={item.href}
-									size="lg"
-									onClick={() => { setIsMenuOpen(false); }}
-								>
-									{item.label}
-								</Link>
-							</NavbarMenuItem>
-						))}
-						{session ? (
-							siteConfig.navMenuUserItems.map((item, index) => (
-								<NavbarMenuItem key={`${item}-${index}`}>
-									<Link
-										color={
-											index === 2
-												? "primary"
-												: index === siteConfig.navMenuUserItems.length - 1
-													? "danger"
-													: "foreground"
-										}
-										href={item.href}
-										size="lg"
-										onClick={() => { setIsMenuOpen(false); if (item.label === 'Log Out') { onOpen(); } }}
-									>
-										{item.label}
-									</Link>
-								</NavbarMenuItem>
-							))
-						) : (
-							siteConfig.navMenuAuthItems.map((item, index) => (
-								<NavbarMenuItem key={`${item}-${index}`}>
-									<Link
-										color={
-											index === 2
-												? "primary"
-												: index === siteConfig.navMenuAuthItems.length - 1
-													? "danger"
-													: "foreground"
-										}
-										href={item.href}
-										size="lg"
-										onClick={() => { setIsMenuOpen(false); }}
-									>
-										{item.label}
-									</Link>
-								</NavbarMenuItem>
-							))
-						)}
-						{session ? (
+					<ListboxWrapper>
+						<Listbox>
+							<ListboxSection title="General" showDivider>
+								{siteConfig.navMenuItems.map((item, index) => (
+									<ListboxItem key={`${item}-${index}`}>
+										<Link
+											color={"foreground"}
+											href={item.href}
+											size="lg"
+											onClick={() => { setIsMenuOpen(false); }}
+										>
+											{item.label}
+										</Link>
+									</ListboxItem>
+								))}
+							</ListboxSection>
+
+							<ListboxSection title="Admin Actions" showDivider hidden={session?.user.role !== 'admin'}>
+								{siteConfig.navAdminItems.map((item, index) => (
+									<ListboxItem key={`${item}-${index}`}>
+										<Link
+											color={"foreground"}
+											href={item.href}
+											size="lg"
+											onClick={() => { setIsMenuOpen(false); }}
+										>
+											{item.label}
+										</Link>
+									</ListboxItem>
+								))}
+							</ListboxSection>
+
+							<ListboxSection title="Operator Actions" showDivider hidden={session?.user.role !== 'operator'}>
+								{siteConfig.navOperatorItems.map((item, index) => (
+									<ListboxItem key={`${item}-${index}`}>
+										<Link
+											color={"foreground"}
+											href={item.href}
+											size="lg"
+											onClick={() => { setIsMenuOpen(false); }}
+										>
+											{item.label}
+										</Link>
+									</ListboxItem>
+								))}
+							</ListboxSection>
+
+							<ListboxSection title="Moderator Actions" showDivider hidden={session?.user.role !== 'moderator'}>
+								{siteConfig.navOperatorItems.map((item, index) => (
+									<ListboxItem key={`${item}-${index}`}>
+										<Link
+											color={"foreground"}
+											href={item.href}
+											size="lg"
+											onClick={() => { setIsMenuOpen(false); }}
+										>
+											{item.label}
+										</Link>
+									</ListboxItem>
+								))}
+							</ListboxSection>
+
+							<ListboxSection title="User Actions">
+
+								{session ? (
+									siteConfig.navMenuUserItems.map((item, index) => (
+										<ListboxItem key={`${item}-${index}`}>
+											<Link
+												color={
+													index === 2
+														? "primary"
+														: index === siteConfig.navMenuUserItems.length - 1
+															? "danger"
+															: "foreground"
+												}
+												href={item.href}
+												size="lg"
+												onClick={() => { setIsMenuOpen(false); if (item.label === 'Log Out') { onOpen(); } }}
+											>
+												{item.label}
+											</Link>
+										</ListboxItem>
+									))
+								) : (
+									siteConfig.navMenuAuthItems.map((item, index) => (
+										<ListboxItem key={`${item}-${index}`}>
+											<Link
+												color={
+													index === 2
+														? "primary"
+														: index === siteConfig.navMenuAuthItems.length - 1
+															? "danger"
+															: "foreground"
+												}
+												href={item.href}
+												size="lg"
+												onClick={() => { setIsMenuOpen(false); }}
+											>
+												{item.label}
+											</Link>
+										</ListboxItem>
+									))
+								)}
+								{/* {session ? (
 							<NavbarItem className="hidden md:flex">
 								<LogOutButton />
 							</NavbarItem>
-						) : null}
-					</div>
+						) : null} */}
+							</ListboxSection>
+						</Listbox>
+					</ListboxWrapper>
 				</NavbarMenu>
 			</NextUINavbar>
 			<Modal isOpen={isOpen} onOpenChange={onOpenChange}>

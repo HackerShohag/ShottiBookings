@@ -14,7 +14,7 @@ export default function ShowHidePassword({ onClick }: ShowHidePasswordProps) {
     }
 
     return (
-        <div onClick={togglePasswordVisibility} style={{ cursor: "pointer" }}>
+        <div onClick={togglePasswordVisibility} className='cursor-pointer'>
             {showPassword ? <ShowPassIcon /> : <HidePassIcon />}
         </div>
     )
