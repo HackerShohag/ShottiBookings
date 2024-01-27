@@ -13,6 +13,7 @@ import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDi
 import SeatLayout from "@/components/BusSeatLayout/BusSeatLayout";
 import { siteConfig } from "@/config/site";
 import { useSession } from "next-auth/react";
+import ProcessingFee from "@/components/ProcessingFee/ProcessingFee";
 
 
 const BusService = () => {
@@ -28,6 +29,7 @@ const BusService = () => {
     const [routes, setRoutes] = useState<string[]>([]);
     const [offeredJourneys, setOfferedJourneys] = useState<OfferedJourney[]>([]);
     const [selectedID, setSelectedID] = useState<string>();
+    const [currentOfferedJourney, setCurrentOfferedJourney] = useState<OfferedJourney | null>(null); // Added currentOfferedJourney state
 
     const [formData, setFormData] = useState<FormData>({
         origin: '',
@@ -135,8 +137,8 @@ const BusService = () => {
     ];
 
     const bookButtonHandle = (id: string) => {
-        // setIsNextButtonAvailable(true);
         setSelectedID(id);
+        setCurrentOfferedJourney(dummyOfferedJourney.find(journey => journey.id === id) || null);
         onOpen();
     }
 
@@ -172,6 +174,9 @@ const BusService = () => {
                             <ModalHeader className="flex flex-col gap-1">Select Seats</ModalHeader>
                             <ModalBody>
                                 <SeatLayout setSeatsButton={setSeatsButton} ticketStatus={{ available: "Available", booked: "Selected", occupied: "Occupied" }} />
+                                {
+                                    selectedSeats.length > 0 && currentOfferedJourney ? <ProcessingFee seats={selectedSeats} cost={currentOfferedJourney.fare} /> : null
+                                }
                             </ModalBody>
                             <ModalFooter className="justify-between">
                                 <Button variant="light" color="danger" onClick={onClose}>Cancel</Button>

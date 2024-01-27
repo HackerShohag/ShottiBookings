@@ -122,6 +122,8 @@ export const MemberTable = (props: AccountsProps) => {
           console.log(data?.data);
           setNoUserFound(false);
         } else {
+          console.log('No user found');
+          console.log(data);
           setNoUserFound(true);
         }
         setProcessing(false);

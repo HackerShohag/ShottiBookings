@@ -1,6 +1,6 @@
 'use client';
 
-import Content from "@/components/Dashboard/AdminContent";
+import Content from "@/components/Dashboard/ModeratorContent";
 import { Button, Card, CardBody, CardFooter, CardHeader, CircularProgress } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";

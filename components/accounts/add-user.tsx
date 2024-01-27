@@ -22,7 +22,6 @@ interface AddUserProps {
 }
 
 export const AddUser: React.FC<AddUserProps> = (props) => {
-
   const { data: session, status } = useSession();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const { isOpen: isErrorOpen, onOpen: onErrorOpen, onOpenChange: onErrorOpenChange, onClose: onErrorClose } = useDisclosure();
@@ -36,6 +35,9 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [companyName, setCompanyName] = useState(""); // Added state for companyName
+  const [routeFrom, setRouteFrom] = useState("");
+  const [routeTo, setRouteTo] = useState("");
 
   const [fullNameError, setFullNameError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -43,6 +45,9 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
   const [genderError, setGenderError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [companyNameError, setCompanyNameError] = useState(""); // Added state for companyNameError
+  const [routeFromError, setRouteFromError] = useState("");
+  const [routeToError, setRouteToError] = useState("");
 
   const [fullNameFocusChanged, setFullNameFocusChanged] = useState(false);
   const [emailFocusChanged, setEmailFocusChanged] = useState(false);
@@ -50,10 +55,12 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
   const [genderFocusChanged, setGenderFocusChanged] = useState(false);
   const [passwordFocusChanged, setPasswordFocusChanged] = useState(false);
   const [confirmPasswordFocusChanged, setConfirmPasswordFocusChanged] = useState(false);
+  const [companyNameFocusChanged, setCompanyNameFocusChanged] = useState(false); // Added state for companyNameFocusChanged
+  const [routeFromFocusChanged, setRouteFromFocusChanged] = useState(false);
+  const [routeToFocusChanged, setRouteToFocusChanged] = useState(false);
 
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
-
   const [errorMessage, setErrorMessage] = useState('');
 
   const user = {
@@ -61,6 +68,7 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
     operators: "operator",
     drivers: "driver",
     customers: "customer",
+    moderators: "moderator",
   }[props.userType || ''] || "customer";
 
   useEffect(() => {
@@ -139,6 +147,34 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
         setConfirmPasswordError("");
       }
     }
+
+    if (companyNameFocusChanged) { // Added validation for companyName
+      if (companyName.trim() === "") {
+        setCompanyNameError("Please enter the company name");
+        isValid = false;
+      } else {
+        setCompanyNameError("");
+      }
+    }
+
+    if (routeFromFocusChanged) { // Added validation for routeFrom
+      if (routeFrom.trim() === "") {
+        setRouteFromError("Please enter the route from");
+        isValid = false;
+      } else {
+        setRouteFromError("");
+      }
+    }
+
+    if (routeToFocusChanged) { // Added validation for routeTo
+      if (routeTo.trim() === "") {
+        setRouteToError("Please enter the route to");
+        isValid = false;
+      } else {
+        setRouteToError("");
+      }
+    }
+
   }, [
     fullName,
     email,
@@ -146,12 +182,18 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
     gender,
     password,
     confirmPassword,
+    companyName, // Added companyName to the dependency array
+    routeFrom, // Added routeFrom to the dependency array
+    routeTo, // Added routeTo to the dependency array
     fullNameFocusChanged,
     emailFocusChanged,
     phoneNumberFocusChanged,
     genderFocusChanged,
     passwordFocusChanged,
     confirmPasswordFocusChanged,
+    companyNameFocusChanged, // Added companyNameFocusChanged to the dependency array
+    routeFromFocusChanged, // Added routeFromFocusChanged to the dependency array
+    routeToFocusChanged, // Added routeToFocusChanged to the dependency array
   ]);
 
   const handleAddUser = () => {
@@ -163,10 +205,18 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
       phoneNumberError !== "" ||
       genderError !== "" ||
       passwordError !== "" ||
-      confirmPasswordError !== ""
+      confirmPasswordError !== "" ||
+      companyNameError !== "" || // Added companyNameError to the condition
+      routeFromError !== "" || // Added routeFromError to the condition
+      routeToError !== "" // Added routeToError to the condition
     ) {
       onErrorOpen();
       return;
+    }
+
+    interface route {
+      from: string;
+      to: string;
     }
 
     interface MemberType {
@@ -177,6 +227,8 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
         contactNo: string;
         gender: string;
         password: string;
+        companyName?: string;
+        route?: route[];
       };
     }
 
@@ -190,6 +242,17 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
         password: password,
       },
     };
+
+    if (props.userType === "moderators") {
+      userData.user = {
+        ...userData.user,
+        companyName: companyName,
+        route: [{
+          from: routeFrom,
+          to: routeTo
+        }],
+      };
+    }
 
     setProcessing(true);
     const response = fetch(siteConfig.backendServer.address + '/user/create-' + user, {
@@ -279,6 +342,44 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
                     <SelectItem key="female">Female</SelectItem>
                     <SelectItem key="others">Others</SelectItem>
                   </Select>
+
+                  {
+                    props.userType === "moderators" ?
+                      <>
+                        <Input
+                          label="Company Name"
+                          variant="bordered"
+                          value={companyName}
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                            setCompanyName(e.target.value);
+                          }}
+                          errorMessage={companyNameError}
+                          onFocus={() => setCompanyNameFocusChanged(true)}
+                        />
+                        <label>Please set operating route</label>
+                        <Input
+                          label="From:"
+                          variant="bordered"
+                          value={routeFrom}
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                            setRouteFrom(e.target.value);
+                          }}
+                          errorMessage={routeFromError}
+                          onFocus={() => setRouteFromFocusChanged(true)}
+                        />
+                        <Input
+                          label="To:"
+                          variant="bordered"
+                          value={routeTo}
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                            setRouteTo(e.target.value);
+                          }}
+                          errorMessage={routeToError}
+                          onFocus={() => setRouteToFocusChanged(true)}
+                        />
+                      </>
+                      : null
+                  }
 
                   <Input
                     label="Password"
