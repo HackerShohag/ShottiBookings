@@ -35,7 +35,6 @@ export default function LoginForm() {
         if (response?.ok) {
             setIsError(false);
             setProcessing(false);
-            onOpen();
         } else {
             setErrorMessage("Invalid credentials. Please try again.");
             setIsError(true);
@@ -97,7 +96,7 @@ export default function LoginForm() {
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                             <Input
                                 type="email"
-                                label="Email"
+                                label="Email or Phone Number"
                                 name="email"
                                 placeholder="you@example.com"
                                 labelPlacement="outside"

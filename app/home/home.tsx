@@ -1,3 +1,4 @@
+import { CompanyLogo } from '@/components/Logo/Logo';
 import { BusComponent, HotelComponent, TrainComponent } from './Components';
 
 import './home.css';
@@ -6,6 +7,7 @@ function Home() {
 
     return (
         <div className='logo-container'>
+            <CompanyLogo height='100px' />
             <div className="container-wrapper">
                 <BusComponent />
                 <HotelComponent />

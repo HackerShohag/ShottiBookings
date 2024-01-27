@@ -62,21 +62,21 @@ export const siteConfig = {
 	navOperatorItems: [
 		{
 			label: "Bus",
-			href: "/accounts",
+			href: "/operator/dashboard/buses",
 		},
 		{
-			label: "Add Schedule",
-			href: "/accounts",
+			label: "Schedules",
+			href: "/operator/dashboard/schedules",
 		}
 	],
 	navModeratorItems: [
 		{
 			label: "Bus",
-			href: "/accounts",
+			href: "/moderator/dashboard/buses",
 		},
 		{
-			label: "Add Route",
-			href: "/accounts",
+			label: "Routes",
+			href: "/moderator/dashboard/routes",
 		}
 	],
 	navMenuItems: [

@@ -22,7 +22,7 @@ const PageThree = ({ onButtonClick, origin, destination, selectedSeats }: BasicF
             Destination: {destination}
           </div>
         </div>
-        <SeatLayout ticketStatus={{ available: "Available", booked: "Booked", occupied: "Occupied" }} />
+        <SeatLayout ticketStatus={{ available: "Available", booked: "Selected", occupied: "Occupied" }} />
 
 
         <div>

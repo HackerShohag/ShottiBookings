@@ -11,10 +11,10 @@ import { useState } from "react";
 interface BasicFormProps {
   offeredJourney: OfferedJourney[];
   processing: boolean;
-  onButtonClick?: (() => void);
+  bookButtonHandle?: (id: string) => void;
 }
 
-const renderOfferedJourney = (journeys: OfferedJourney[], onButtonClick: (() => void) | undefined) => {
+const renderOfferedJourney = (journeys: OfferedJourney[], bookButtonHandle: ((id: string) => void) | undefined) => {
   if (Array.isArray(journeys)) {
     return (
       journeys.map((journey, index) => (
@@ -24,10 +24,9 @@ const renderOfferedJourney = (journeys: OfferedJourney[], onButtonClick: (() => 
           seatAvailability={journey?.slot.length}
           departureTime={journey?.startTime}
           image={busImg.src}
-          route={journey?.from + " - " + journey?.to}
-          fare={500}
+          fare={journey.fare}
           name={journey?.bus?.companyName}
-          onButtonClick={() => { if (onButtonClick) { onButtonClick() } }}
+          onButtonClick={() => { if (bookButtonHandle) { bookButtonHandle(journey.id) } }}
         />
       )));
   } else {
@@ -45,7 +44,7 @@ const renderOfferedJourney = (journeys: OfferedJourney[], onButtonClick: (() => 
   }
 }
 
-const PageTwo = ({ offeredJourney, onButtonClick, processing }: BasicFormProps) => {
+const PageTwo = ({ offeredJourney, bookButtonHandle, processing }: BasicFormProps) => {
 
   const urlSearchParams = new URLSearchParams(window.location.search);
   const source = urlSearchParams.get('source');
@@ -61,6 +60,7 @@ const PageTwo = ({ offeredJourney, onButtonClick, processing }: BasicFormProps) 
 
   return (
     <div className="mr-2 ml-2">
+      <h1 className="text-2xl">Available Buses from {offeredJourney.at(0)?.from} to {offeredJourney.at(0)?.to}</h1>
       {
         processing ? (
           <div className="flex flex-col justify-center items-center m-5 mb-10">
@@ -80,7 +80,7 @@ const PageTwo = ({ offeredJourney, onButtonClick, processing }: BasicFormProps) 
               </CardBody>
             </Card>
           ) : (
-            renderOfferedJourney(offeredJourney, onButtonClick)
+            renderOfferedJourney(offeredJourney, bookButtonHandle)
           )
         )
       }

@@ -1,10 +1,22 @@
 'use client';
 
 import { Card, CardBody, CardHeader, Divider, Accordion, AccordionItem } from '@nextui-org/react';
+import Head from 'next/head';
 
 const Terms = () => {
     return (
         <div>
+            <Head>
+                <title>
+                    Terms and Conditions | Shotti Bookings
+                </title>
+                <meta
+                    name="description"
+                    content="Terms and Conditions for bus ticket booking at Shotti Bookings."
+                    key="desc"
+                />
+            </Head>
+
             <Card>
                 <CardHeader className='flex justify-center text-3xl'>
                     Shotti Bookings Terms and Conditions

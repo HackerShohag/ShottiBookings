@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
-import { Tabs, Tab, Card, CardBody, CardHeader, Input, CardFooter, Button, CircularProgress } from "@nextui-org/react";
+import { Tabs, Tab, Card, CardBody, CardHeader, Input, CardFooter, Button, CircularProgress, Textarea } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { siteConfig } from "@/config/site";
 import { useRouter } from "next/navigation";
@@ -55,11 +55,34 @@ export default function ProfilePage() {
                 <Card>
                     <CardHeader className="text-2xl justify-center">Profile</CardHeader>
                     <CardBody>
-                        <p>Name: {session?.user.name}</p>
-                        <p>Email: {session?.user.email}</p>
-                        <p>Phone: {session?.user.role}</p>
+                        <Textarea
+                            isReadOnly
+                            label="Name:"
+                            variant="bordered"
+                            labelPlacement="outside"
+                            placeholder="Enter your name"
+                            defaultValue={session?.user.name}
+                            minRows={1}
+                        />
+                        <Textarea
+                            isReadOnly
+                            label="Email:"
+                            variant="bordered"
+                            labelPlacement="outside"
+                            placeholder="Enter your email"
+                            defaultValue={session?.user.email}
+                            minRows={1}
+                        />
+                        <Textarea
+                            isReadOnly
+                            label="Phone:"
+                            variant="bordered"
+                            labelPlacement="outside"
+                            placeholder="Enter your phone"
+                            defaultValue={session?.user.role}
+                            minRows={1}
+                        />
                     </CardBody>
-
                 </Card>
             ),
         },
@@ -86,6 +109,18 @@ export default function ProfilePage() {
                 <CardBody>
                     <p>
                         You have no past journeys.
+                    </p>
+                </CardBody>
+            </Card>
+        },
+        {
+            id: "upcoming-journeys",
+            label: "Upcoming Journey",
+            content: <Card>
+                <CardHeader className="text-2xl justify-center">Upcoming Journeys</CardHeader>
+                <CardBody>
+                    <p>
+                        You have no upcoming journeys.
                     </p>
                 </CardBody>
             </Card>

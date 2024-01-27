@@ -38,13 +38,13 @@ export const options: NextAuthOptions = {
             async authorize(credentials) {
 
                 const res = await fetch(siteConfig.backendServer.address + "/auth/login", {
-                    method: "post",
+                    method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
                         'withCredentials': 'true'
                     },
                     body: JSON.stringify({
-                        email: credentials?.email,
+                        query: credentials?.email,
                         password: credentials?.password
                     })
                 });

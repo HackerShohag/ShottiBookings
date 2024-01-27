@@ -12,6 +12,7 @@ export type FormData = {
 }
 
 export type OfferedJourney = {
+  id: string;
   bus: {
     no: string;
     companyName: string;
@@ -20,6 +21,7 @@ export type OfferedJourney = {
   startTime: string;
   from: string;
   to: string;
+  fare: number;
 }
 
 export type MemberType = {

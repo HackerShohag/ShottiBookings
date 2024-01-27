@@ -1,6 +1,5 @@
 // BusInfo.tsx
 import React from 'react';
-import Image from 'next/image';
 import './BusInfo.css';
 import { Button, Card, CardBody } from '@nextui-org/react';
 
@@ -11,7 +10,6 @@ interface BusInfoProps {
     seatAvailability: number;
     departureTime: string;
     image: string;
-    route: string;
     fare: number;
     isAC?: boolean;
     onButtonClick?: (() => void) | undefined;
@@ -23,18 +21,12 @@ const BusInfo: React.FC<BusInfoProps> = (props) => {
             <CardBody>
                 <div className="flex row items-center">
                     <div className="column">
-                        <Image src={props.image} alt="Bus Image" className="bus-image" />
-                        <p className='flex justify-center'>{props.isAC ? 'AC' : 'Non-AC'}</p>
+                        <h3>Name: {props.name}</h3>
+                        <p>Time: {props.departureTime}</p>
                     </div>
                     <div className="column">
-                        <h3>Bus Name: {props.name}</h3>
-                        <p>Bus ID: {props.id}</p>
-                        <p>Route: {props.route}</p>
-                        <p>Departure Time: {props.departureTime}</p>
-                    </div>
-                    <div className="column">
+                        <p>{props.isAC ? 'AC' : 'Non-AC'}</p>
                         <p>Fare: {props.fare}</p>
-                        <p>Seat Availability: {props.seatAvailability}</p>
                         <Button className="book-button" onClick={() => props.onButtonClick && props.onButtonClick()}>Book Now</Button>
                     </div>
                 </div>

@@ -7,16 +7,27 @@ import MultiStepPage from "./MultiStepPages/MultiStepPages";
 import PageOne from "./MultiStepPages/PageOne/PageOne";
 import PageThree from "./MultiStepPages/PageThree/PageThree";
 import PageTwo from "./MultiStepPages/PageTwo/PageTwo";
+import { fetchRoutes, fetchOfferedJourney } from "./fetchFunction";
+import Head from "next/head";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
+import SeatLayout from "@/components/BusSeatLayout/BusSeatLayout";
 import { siteConfig } from "@/config/site";
+import { useSession } from "next-auth/react";
 
 
 const BusService = () => {
 
+    const { data: session, status } = useSession();
+
+
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+
     const [isNextButtonAvailable, setIsNextButtonAvailable] = useState(false);
     const [processing, setProcessing] = useState(false);
     const [routes, setRoutes] = useState<string[]>([]);
-    const [offeredJourney, setOfferedJourney] = useState<OfferedJourney[]>([]);
-
+    const [offeredJourneys, setOfferedJourneys] = useState<OfferedJourney[]>([]);
+    const [selectedID, setSelectedID] = useState<string>();
 
     const [formData, setFormData] = useState<FormData>({
         origin: '',
@@ -26,17 +37,6 @@ const BusService = () => {
     });
 
     const searchParams = new URLSearchParams();
-
-
-    // // get data from search params for source, destination and date
-    // const urlSearchParams = new URLSearchParams(window.location.search);
-    // const source = urlSearchParams.get('source');
-    // const destination = urlSearchParams.get('destination');
-    // const date = urlSearchParams.get('date');
-    // // set data to form data
-    // setFormData((prevData) => ({ ...prevData, origin: source || '', destination: destination || '', date: date || '' }));
-
-
     searchParams.set('source', formData.origin);
     searchParams.set('destination', formData.destination);
     searchParams.set('date', formData.date);
@@ -44,62 +44,144 @@ const BusService = () => {
         window.history.pushState({}, '', `?${searchParams.toString()}`);
     }
 
-    useEffect(() => {
-        setProcessing(true);
-        const fetchRoutes = async () => {
-            const res = await fetch(siteConfig.backendServer.address + '/routes/get-routes',
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-            const data = await res.json();
-            setRoutes(data?.data.at(0)?.routes);
-        }
-        fetchRoutes();
-        setProcessing(false);
-    }, []);
-
-    const nextButtonFunction = () => {
-        setProcessing(true);
-        const fetchOfferedJourney = async () => {
-            const res = await fetch(siteConfig.backendServer.address + '/offeredJourney/get-offeredJourney',
-                {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        from: formData.origin,
-                        stops: [formData.destination],
-                        date: formData.date
-                    }),
-                });
-
-            const data = await res.json();
-            console.log(data);
-            setOfferedJourney(data);
-        }
-        fetchOfferedJourney();
-        setProcessing(false);
-        setIsNextButtonAvailable(false);
-    }
 
     const handlePageOneChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
 
+    const handleBook = () => {
+
+        fetch(siteConfig.backendServer.address + '/booking/create-booking', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': '' + session?.accessToken
+            },
+            body: JSON.stringify({
+                "journey": selectedID,
+                "userId": 1,
+                "slot": selectedSeats,
+            })
+        }).then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
+
+        console.log('Booked');
+    }
+
+
+    useEffect(() => {
+        setProcessing(true);
+        const fetchRoutesFunction = async () => {
+            const data = await fetchRoutes();
+            setRoutes(data);
+        }
+        fetchRoutesFunction();
+        setProcessing(false);
+    }, []);
+
+    const nextButtonFunction = () => {
+        setProcessing(true);
+        const fetchOfferedJourneyFunction = async () => {
+            const data = await fetchOfferedJourney(formData);
+            setOfferedJourneys(data);
+            if (offeredJourneys.length > 0) {
+                setIsNextButtonAvailable(true);
+            }
+        }
+        fetchOfferedJourneyFunction();
+        setProcessing(false);
+        setIsNextButtonAvailable(false);
+    }
+
+    const dummyOfferedJourney: OfferedJourney[] = [
+        {
+            id: "1",
+            bus: {
+                companyName: "Bus Company X",
+                no: "Bus X",
+            },
+            startTime: "9:00 AM",
+            from: "Dhaka",
+            to: "Sylhet",
+            fare: 80,
+            slot: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8'],
+        },
+        {
+            id: "2",
+            bus: {
+                companyName: "Bus Company Y",
+                no: "Bus Y",
+            },
+            startTime: "10:00 AM",
+            from: "Dhaka",
+            to: "Sylhet",
+            fare: 90,
+            slot: ['A1', 'A2', 'A3', 'A4', 'B1', 'B3', 'B4'],
+        },
+        {
+            id: "3",
+            bus: {
+                companyName: "Bus Company Z",
+                no: "Bus Z",
+            },
+            startTime: "11:00 AM",
+            from: "Dhaka",
+            to: "Sylhet",
+            fare: 100,
+            slot: ['A1', 'A2', 'A3', 'A4', 'C1', 'C2', 'C3', 'C4'],
+        },
+    ];
+
+    const bookButtonHandle = (id: string) => {
+        // setIsNextButtonAvailable(true);
+        setSelectedID(id);
+        onOpen();
+    }
+
+    const setSeatsButton = (seats: string[]) => {
+        setSelectedSeats(seats);
+        console.log(seats);
+    }
+
     const formElements = [
         <PageOne key="pageOne" processing={processing} routes={routes} formData={formData} handleChange={handlePageOneChange} handleDataAvialblity={setIsNextButtonAvailable} />,
-        <PageTwo key="pageTwo" processing={processing} offeredJourney={offeredJourney} onButtonClick={undefined} />,
+        <PageTwo key="pageTwo" processing={processing} offeredJourney={dummyOfferedJourney} bookButtonHandle={bookButtonHandle} />,
         <PageThree key="pageThree" />
-    ]
+    ];
 
     return (
-        <MultiStepPage MultiStepFormElements={formElements} nextButtonAvailable={isNextButtonAvailable} nextButtonFunction={nextButtonFunction} />
+        <>
+            <Head>
+                <title>
+                    Bus Ticket Booking Service | Shotti Bookings
+                </title>
+                <meta
+                    name="description"
+                    content="Bus Ticket Booking Service | Shotti Bookings"
+                    key="desc"
+                />
+            </Head>
+
+            <MultiStepPage MultiStepFormElements={formElements} nextButtonAvailable={isNextButtonAvailable} nextButtonFunction={nextButtonFunction} />
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">Select Seats</ModalHeader>
+                            <ModalBody>
+                                <SeatLayout setSeatsButton={setSeatsButton} ticketStatus={{ available: "Available", booked: "Selected", occupied: "Occupied" }} />
+                            </ModalBody>
+                            <ModalFooter className="justify-between">
+                                <Button variant="light" color="danger" onClick={onClose}>Cancel</Button>
+                                <Button color="primary" onClick={handleBook}>Book</Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+        </>
     )
 }
 

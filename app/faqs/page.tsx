@@ -1,10 +1,21 @@
 'use client';
 
 import { Card, Divider, Accordion, AccordionItem, Link, CardHeader, CardBody, CardFooter } from '@nextui-org/react';
+import Head from 'next/head';
 
 const FAQ = () => {
   return (
     <div>
+      <Head>
+        <title>
+          Frequently Asked Questions (FAQs) | Shotti Bookings
+        </title>
+        <meta
+          name="description"
+          content="Frequently Asked Questions (FAQs) about bus ticket booking and customer support at Shotti Bookings."
+          key="desc"
+        />
+      </Head>
       <Card >
         <CardHeader className='flex justify-center text-3xl'>
           Frequently Asked Questions (FAQs)

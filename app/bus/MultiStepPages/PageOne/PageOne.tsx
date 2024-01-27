@@ -31,10 +31,10 @@ const PageOne = ({ handleChange, routes, formData, processing, handleDataAvialbl
     <BorderContainer>
       {
         processing ? (
-          <Spinner size='lg' />
+          <Spinner size='lg' className='text-red-500' />
         ) : (
           <>
-            <h2>Bus Ticket Booking Service</h2>
+            <h2 className='text-red-500'>Bus Ticket Booking Service</h2>
             <div className='row-container'>
               <BasicForm routes={routes} formData={formData} handleChange={handleChange} handleDataAvialblity={handleDataAvialblity} />
               <Image src={busImg} alt="Image" />

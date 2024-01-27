@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import './BusSeatLayout.css'; // Import your CSS file for styling
+import './BusSeatLayout.css';
 import { Button } from '@nextui-org/button';
 
 export interface SeatProps {
@@ -38,24 +38,32 @@ interface SeatLayoutProps {
         booked: string;
         occupied: string;
     };
+    setSeatsButton?: (seats: string[]) => void;
 }
 
 const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
     const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     const handleSeatSelect = (seatNumber: string) => {
+        setErrorMessage('');
         setSelectedSeats((prevSelectedSeats) => {
             if (prevSelectedSeats.includes(seatNumber)) {
-                // Deselect the seat if already selected
                 return prevSelectedSeats.filter((seat) => seat !== seatNumber);
             } else {
-                // Select the seat if not selected
-                return [...prevSelectedSeats, seatNumber];
+                if (prevSelectedSeats.length < 4) {
+                    return [...prevSelectedSeats, seatNumber];
+                } else {
+                    setErrorMessage('You can select maximum 4 seats');
+                    return prevSelectedSeats;
+                }
             }
         });
+        if (props.setSeatsButton) {
+            props.setSeatsButton(selectedSeats);
+        }
     };
 
-    // Assuming a 9x5 grid layout with a blank column
     const rows = 9;
     const columns = 5;
 
@@ -78,7 +86,6 @@ const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
 
         for (let row = 1; row <= rows; row++) {
             for (let col = 1; col <= columns; col++) {
-                // Skip rendering seats in the blank column
                 if (col === 3) {
                     seats.push(<BlankSeat key={`blank-${row}`} />);
                     continue;
@@ -113,8 +120,8 @@ const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
 
     return (
         <div className="row" style={{ width: props.width }}>
+            {errorMessage && <div className="error-message text-red-600">{errorMessage}</div>}
             <div className='flex column justify-center items-center'>
-
                 <div className='bus-seat-layout'>
                     {renderSeats()}
                 </div>
