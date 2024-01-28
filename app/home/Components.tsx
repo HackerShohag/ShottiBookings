@@ -23,7 +23,7 @@ export function BusComponent() {
             }}
             >
                 <Image className='logo-image' src={busLogo} alt='Bus Image' />
-                <h2 className='m-2 text-green-500 text-lg font-semibold'>Bus Ticket Booking</h2>
+                <h2 className='m-2 text-white text-lg font-semibold'>Bus Ticket Booking</h2>
             </div>
         </TransparentContainer>
     )
@@ -33,8 +33,7 @@ export function HotelComponent() {
         <TransparentContainer className='clickable bg-transparent backdrop-blur-none'>
             <div className="logo-container" onClick={() => { alert("This service is coming soon!") }}>
                 <Image className="logo-image" src={hotelLogo} alt="Hotel Logo" />
-                <h2 className='m-2 text-lg font-semibold text-red-500'>Hotel Booking</h2>
-                <div className="coming-soon text-2xl font-semibold text-pink-300">Coming Soon</div>
+                <h2 className='m-2 text-white text-lg font-semibold'>Hotel Booking</h2>
             </div>
         </TransparentContainer>
     )
@@ -45,8 +44,7 @@ export function TrainComponent() {
         <TransparentContainer className='clickable bg-transparent backdrop-blur-none'>
             <div className="logo-container" onClick={() => { alert("This service is coming soon!") }}>
                 <Image className="logo-image" src={trainLogo} alt="Train Logo" />
-                <h2 className='m-2 text-lg font-semibold text-green-500'>Train Ticket Booking</h2>
-                <div className="coming-soon text-2xl font-semibold text-pink-300">Coming Soon</div>
+                <h2 className='m-2 text-white text-lg font-semibold'>Train Ticket Booking</h2>
             </div>
         </TransparentContainer>
     )

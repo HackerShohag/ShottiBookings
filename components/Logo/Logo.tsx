@@ -8,7 +8,7 @@ const Logo: FC = () => {
         <div className="m-5 flex justify-center items-center">
             <div className='flex flex-col items-center justify-center'>
                 <Image className='' style={{ width: '45px', height: '45px', borderRadius: '50%' }} src={companyLogo} alt='logo' />
-                <h5 className="mt-3 text-red-500 text-lg leading-6">Quality Services Assured.</h5>
+                <h5 className="mt-3 text-sky-950 font-bold text-lg leading-6">Quality Services Assured.</h5>
             </div>
         </div>
     )

@@ -32,7 +32,7 @@ export const Navbar = () => {
 
 	return (
 		<>
-			<NextUINavbar className="bg-red-800" isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} maxWidth="xl" position="sticky">
+			<NextUINavbar className="bg-red-600" isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} maxWidth="xl" position="sticky">
 				<NavbarContent className="basis-1/5 sm:basis-full" justify="start">
 					<NavbarBrand as="li" className="gap-3 max-w-fit">
 						<NextLink className="flex justify-start items-center gap-1" href="/">
@@ -46,7 +46,7 @@ export const Navbar = () => {
 								<NextLink
 									className={clsx(
 										linkStyles({ color: "foreground" }),
-										"data-[active=true]:text-primary data-[active=true]:font-medium"
+										"data-[active=true]:text-primary text-white data-[active=true]:font-medium"
 									)}
 									color="default"
 									href={item.href}
@@ -114,6 +114,7 @@ export const Navbar = () => {
 							<ListboxSection title="General" showDivider>
 								{siteConfig.navMenuItems.map((item, index) => (
 									<ListboxItem
+									className="text-white"
 										key={`${item}-${index}`}
 										color={"default"}
 										href={item.href}
@@ -133,6 +134,7 @@ export const Navbar = () => {
 							>
 								{siteConfig.navAdminItems.map((item, index) => (
 									<ListboxItem
+									className="text-white"
 										key={`${item}-${index}`}
 										color={"default"}
 										href={item.href}
@@ -152,7 +154,8 @@ export const Navbar = () => {
 							>
 								{siteConfig.navOperatorItems.map((item, index) => (
 									<ListboxItem
-										key={`${item}-${index}`}
+									className="text-white"
+									key={`${item}-${index}`}
 										color={"default"}
 										href={item.href}
 										onClick={() => {
@@ -171,7 +174,8 @@ export const Navbar = () => {
 							>
 								{siteConfig.navOperatorItems.map((item, index) => (
 									<ListboxItem
-										key={`${item}-${index}`}
+									className="text-white"
+									key={`${item}-${index}`}
 										color={"default"}
 										href={item.href}
 										onClick={() => {
@@ -187,7 +191,8 @@ export const Navbar = () => {
 								{session
 									? siteConfig.navMenuUserItems.map((item, index) => (
 										<ListboxItem
-											key={`${item}-${index}`}
+									className="text-white"
+									key={`${item}-${index}`}
 											color={
 												index === 2
 													? "primary"
@@ -208,7 +213,8 @@ export const Navbar = () => {
 									))
 									: siteConfig.navMenuAuthItems.map((item, index) => (
 										<ListboxItem
-											key={`${item}-${index}`}
+									className="text-white"
+									key={`${item}-${index}`}
 											color={
 												index === 2
 													? "primary"

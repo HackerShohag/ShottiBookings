@@ -42,9 +42,9 @@ export default function RootLayout({
 					fontSans.variable
 				)}
 				style={{
-					// backgroundImage: `url("/assets/banners/bus.jpg")`,
-					backgroundColor: "grey",
-					backgroundRepeat: "no-repeat",
+					backgroundImage: `url("/assets/banners/bus.jpg")`,
+					backgroundColor: "green",
+					backgroundRepeat: "repeat",
 					backgroundSize: "cover",
 				}}
 			>
@@ -53,18 +53,10 @@ export default function RootLayout({
 
 					<div className="relative flex flex-col h-screen">
 						<Navbar />
-						<main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
+						<main className="container mx-auto max-w-7xl pt-0 px-6 flex-grow">
 							{children}
 						</main>
 						<footer className="w-full flex items-center justify-center py-3">
-							<Link
-								className="flex items-center gap-1 text-current"
-								href="/"
-								title="Go To Home Page"
-							>
-								<CompanyLogo />
-								<p className="text-primary">{siteConfig.companyName}</p>
-							</Link>
 						</footer>
 					</div>
 				</Providers>

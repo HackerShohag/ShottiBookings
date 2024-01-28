@@ -10,6 +10,7 @@ body {
     place-items: center;
     min-width: 320px;
     min-height: 100vh;
+    
 }
 
 :root {
@@ -92,10 +93,6 @@ body {
 
     a:hover {
         color: #747bff;
-    }
-
-    button {
-        background-color: #f9f9f9;
     }
 }
 

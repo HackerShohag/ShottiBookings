@@ -6,7 +6,7 @@ import './home.css';
 function Home() {
 
     return (
-        <div className='logo-container'>
+        <div className='logo-container inset-0'>
             <CompanyLogo height='100px' />
             <div className="container-wrapper">
                 <BusComponent />

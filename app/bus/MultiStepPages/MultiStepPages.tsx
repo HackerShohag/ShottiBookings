@@ -20,7 +20,7 @@ function MultiStepPage({ MultiStepFormElements, nextButtonAvailable, nextButtonF
 
     return (
         <Card
-            className="flex flex-col justify-center border-none bg-gray-400 max-w-[900px] flex justify-center self-center"
+            className="flex flex-col justify-center border-none bg-white max-w-[900px] flex justify-center self-center"
             shadow="sm"
         >
             <CardBody>

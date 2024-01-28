@@ -26,7 +26,7 @@ const BusInfo: React.FC<BusInfoProps> = (props) => {
                     </div>
                     <div className="column">
                         <p>{props.isAC ? 'AC' : 'Non-AC'}</p>
-                        <p>Fare: {props.fare}</p>
+                        <p>Fare: {props.fare} TK</p>
                         <Button className="book-button" onClick={() => props.onButtonClick && props.onButtonClick()}>Book Now</Button>
                     </div>
                 </div>

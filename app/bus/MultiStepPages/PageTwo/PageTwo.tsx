@@ -60,7 +60,7 @@ const PageTwo = ({ offeredJourney, bookButtonHandle, processing }: BasicFormProp
 
   return (
     <div className="mr-2 ml-2">
-      <h1 className="text-2xl">Available Buses from {offeredJourney.at(0)?.from} to {offeredJourney.at(0)?.to}</h1>
+      <h1 className="text-2xl text-sky-950">Available Buses from {offeredJourney.at(0)?.from} to {offeredJourney.at(0)?.to}</h1>
       {
         processing ? (
           <div className="flex flex-col justify-center items-center m-5 mb-10">

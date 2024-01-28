@@ -34,10 +34,10 @@ const PageOne = ({ handleChange, routes, formData, processing, handleDataAvialbl
           <Spinner size='lg' className='text-red-500' />
         ) : (
           <>
-            <h2 className='text-red-500'>Bus Ticket Booking Service</h2>
+            <h2 className='text-sky-950 font-bold'>Bus Ticket Booking Service</h2>
             <div className='row-container'>
               <BasicForm routes={routes} formData={formData} handleChange={handleChange} handleDataAvialblity={handleDataAvialblity} />
-              <Image src={busImg} alt="Image" />
+              {/* <Image src={busImg} alt="Image" /> */}
             </div>
           </>
         )}
