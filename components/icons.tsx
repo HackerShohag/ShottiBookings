@@ -2,7 +2,7 @@ import * as React from "react";
 import { IconSvgProps } from "@/types";
 import Image from "next/image";
 
-import companyImage from '@/public/company.jpeg';
+import companyImage from '@/public/logo.png';
 
 export const CompanyLogo: React.FC<IconSvgProps> = ({
 	size = 36,

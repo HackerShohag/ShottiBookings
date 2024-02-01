@@ -55,7 +55,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({ handleChange, formData, ro
         <div className='booking-form-container'>
             <form onSubmit={handleSubmit}>
                 <Select
-                    color="primary"
+                    color="default"
                     isRequired
                     label="From:"
                     placeholder="Select From"
@@ -73,7 +73,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({ handleChange, formData, ro
                     ))}
                 </Select>
                 <Select
-                    color="primary"
+                    color="default"
                     isDisabled={!formData.origin}
                     isRequired
                     label="To:"
@@ -94,7 +94,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({ handleChange, formData, ro
                         ))}
                 </Select>
                 <Input
-                    color="primary"
+                    color="default"
                     isDisabled={!formData.destination || !formData.origin}
                     labelPlacement='outside'
                     fullWidth

@@ -269,11 +269,12 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
           setSuccess(true);
           setErrorMessage('');
           onClose();
+          return true;
         } else {
           setErrorMessage('Unknown Error Occured!');
         }
         setProcessing(false);
-        return true;
+        return false;
       })
       .catch(err => {
         setErrorMessage('Unknown Error Occured!');
@@ -410,7 +411,7 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
                   <Button color="danger" variant="flat" onClick={onClose}>
                     Close
                   </Button>
-                  <Button color="primary" onPress={() => { handleAddUser() }}>
+                  <Button color="primary" onPress={() => { if (handleAddUser()) { onClose() } }}>
                     Add {props.userType ? props.userType : "User"}
                   </Button>
                 </ModalFooter>

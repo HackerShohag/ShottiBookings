@@ -10,7 +10,9 @@ body {
     place-items: center;
     min-width: 320px;
     min-height: 100vh;
-    
+    animation: image-slideshow 9s infinite;
+    background-size: cover;
+    transition: background-image 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 :root {
@@ -80,7 +82,7 @@ body {
     }
 
     .clickable {
-        height: 1500px;
+        height: 200px;
         width: 100px;
     }
 }
@@ -109,5 +111,23 @@ body {
 @media (prefers-reduced-motion: no-preference) {
     a:nth-of-type(2) .logo {
         animation: logo-spin infinite 20s linear;
+    }
+}
+
+@keyframes image-slideshow {
+    0% {
+        background-image: url("/assets/banners/bus.jpg");
+    }
+
+    33.33% {
+        background-image: url("/assets/banners/hotel.jpg");
+    }
+
+    66.66% {
+        background-image: url("/assets/banners/train.jpg");
+    }
+
+    100% {
+        background-image: url("/assets/banners/bus.jpg");
     }
 }

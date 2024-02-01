@@ -17,7 +17,7 @@ export default function LoginForm() {
     const [errorMessage, setErrorMessage] = useState("");
     const [isError, setIsError] = useState(false);
     const [processing, setProcessing] = useState(false);
-    const [redirectTimer, setRedirectTimer] = useState(3);
+    const [redirectTimer, setRedirectTimer] = useState(0);
 
     const [showPassword, setShowPassword] = useState(false);
 

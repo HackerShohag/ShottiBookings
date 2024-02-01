@@ -51,7 +51,7 @@ const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
             if (prevSelectedSeats.includes(seatNumber)) {
                 return prevSelectedSeats.filter((seat) => seat !== seatNumber);
             } else {
-                if (prevSelectedSeats.length < 4) {
+                if (prevSelectedSeats.length < 6) {
                     return [...prevSelectedSeats, seatNumber];
                 } else {
                     setErrorMessage('You can select maximum 4 seats');
@@ -112,7 +112,16 @@ const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
         }
 
         for (let col = 1; col <= columns; col++) {
-            seats.push(<BlankSeat />);
+
+            const seatNumber = `${String.fromCharCode(64 + col - skip)}${col}`;
+            const status = selectedSeats.includes(seatNumber) ? 'selected' : 'available';
+
+            seats.push(<Seat
+                key={`driver-seat`}
+                seatNumber={seatNumber}
+                status={status}
+                onSelect={() => handleSeatSelect(`A${col}`)}
+            />);
         }
 
         return seats;
@@ -121,11 +130,6 @@ const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
     return (
         <div className="row" style={{ width: props.width }}>
             {errorMessage && <div className="error-message text-red-600">{errorMessage}</div>}
-            <div className='flex column justify-center items-center'>
-                <div className='bus-seat-layout'>
-                    {renderSeats()}
-                </div>
-            </div>
             <div className="flex row m-3 justify-between items-center">
                 <div className="seat-legend">
                     <Button isDisabled className="seat available" ></Button>
@@ -138,6 +142,11 @@ const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
                 <div className="seat-legend">
                     <Button isDisabled className="seat occupied" ></Button>
                     <span className='flex justify-center'>{props.ticketStatus.occupied}</span>
+                </div>
+            </div>
+            <div className='flex column justify-center items-center'>
+                <div className='bus-seat-layout'>
+                    {renderSeats()}
                 </div>
             </div>
         </div>

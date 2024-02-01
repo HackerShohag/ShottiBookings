@@ -23,7 +23,7 @@ export function BusComponent() {
             }}
             >
                 <Image className='logo-image' src={busLogo} alt='Bus Image' />
-                <h2 className='m-2 text-white text-lg font-semibold'>Bus Ticket Booking</h2>
+                <h2 className='m-2 text-white text-lg font-semibold'>Bus Ticket</h2>
             </div>
         </TransparentContainer>
     )
@@ -44,7 +44,7 @@ export function TrainComponent() {
         <TransparentContainer className='clickable bg-transparent backdrop-blur-none'>
             <div className="logo-container" onClick={() => { alert("This service is coming soon!") }}>
                 <Image className="logo-image" src={trainLogo} alt="Train Logo" />
-                <h2 className='m-2 text-white text-lg font-semibold'>Train Ticket Booking</h2>
+                <h2 className='m-2 text-white text-lg font-semibold'>Train Ticket</h2>
             </div>
         </TransparentContainer>
     )

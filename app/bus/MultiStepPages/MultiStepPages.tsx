@@ -20,12 +20,12 @@ function MultiStepPage({ MultiStepFormElements, nextButtonAvailable, nextButtonF
 
     return (
         <Card
-            className="flex flex-col justify-center border-none bg-white max-w-[900px] flex justify-center self-center"
+            className="flex flex-col justify-center border-none max-w-[900px] flex justify-center self-center"
             shadow="sm"
+            style={{ backgroundColor: "#ff1596" }}
         >
             <CardBody>
-                <Logo />
-                <Progress className="mt-5 mb-5" size="lg" aria-label="Loading..." value={(100 / elementLenght) * activeTab} />
+                <Progress color="primary" className="mt-5 mb-5" size="lg" aria-label="Loading..." value={(100 / elementLenght) * activeTab} />
                 {
                     MultiStepFormElements?.[activeTab]
                 }

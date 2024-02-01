@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { FC } from "react";
 
-import companyLogo from '@/public/company.jpeg';
+import companyLogo from '@/public/logo.png';
 
 const Logo: FC = () => {
     return (
@@ -23,14 +23,16 @@ interface ICompanyLogo {
 export const CompanyLogo = (props: ICompanyLogo) => {
 
     return (
-        <div className='flex flex-col justify-center mb-10'>
-            <Image
-                title='Shotti Bookings'
-                src={companyLogo}
-                alt="Company Logo"
-                className="clickable rounded-full"
-                style={{ height: props.height ? props.height : '150px', width: props.width ? props.width : 'auto' }}
-            />
+        <div className='mb-10'>
+            <div className='flex flex-col'>
+                <Image
+                    title='Shotti Bookings'
+                    src={companyLogo}
+                    alt="Company Logo"
+                    className="clickable rounded-full"
+                    style={{ height: props.height ? props.height : '150px', width: props.width ? props.width : '100px' }}
+                />
+            </div>
             <p className="text-lg text-green-500 drop-shadow-2xl font-semibold">Shotti Bookings</p>
         </div>
     );

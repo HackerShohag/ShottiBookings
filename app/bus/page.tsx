@@ -134,6 +134,30 @@ const BusService = () => {
             fare: 100,
             slot: ['A1', 'A2', 'A3', 'A4', 'C1', 'C2', 'C3', 'C4'],
         },
+        {
+            id: "3",
+            bus: {
+                companyName: "Bus Company Z",
+                no: "Bus Z",
+            },
+            startTime: "11:00 AM",
+            from: "Dhaka",
+            to: "Sylhet",
+            fare: 100,
+            slot: ['A1', 'A2', 'A3', 'A4', 'C1', 'C2', 'C3', 'C4'],
+        },
+        {
+            id: "3",
+            bus: {
+                companyName: "Bus Company Z",
+                no: "Bus Z",
+            },
+            startTime: "11:00 AM",
+            from: "Dhaka",
+            to: "Sylhet",
+            fare: 100,
+            slot: ['A1', 'A2', 'A3', 'A4', 'C1', 'C2', 'C3', 'C4'],
+        },
     ];
 
     const bookButtonHandle = (id: string) => {

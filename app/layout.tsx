@@ -4,12 +4,10 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
-import { Link } from "@nextui-org/link";
 import clsx from "clsx";
 
 import SidebarWrapper from "@/components/Sidebar/sidebar";
-
-import { CompanyLogo } from "@/components/icons";
+import BottomNavbar from "@/components/BottomNavbar";
 
 export const metadata: Metadata = {
 	title: {
@@ -19,7 +17,6 @@ export const metadata: Metadata = {
 	description: siteConfig.description,
 	themeColor: [
 		{ media: "(prefers-color-scheme: light)", color: "white" },
-		{ media: "(prefers-color-scheme: dark)", color: "black" },
 	],
 	icons: {
 		icon: "/favicon.ico",
@@ -56,7 +53,11 @@ export default function RootLayout({
 						<main className="container mx-auto max-w-7xl pt-0 px-6 flex-grow">
 							{children}
 						</main>
-						<footer className="w-full flex items-center justify-center py-3">
+						<footer className="w-full flex items-center justify-center">
+							{/* <p className="text-xs text-center text-gray-600">
+								Copyright © {new Date().getFullYear()} Shotti Bookings - All rights reserved
+							</p> */}
+							<BottomNavbar className="flex w-full hide-on-desktop" />
 						</footer>
 					</div>
 				</Providers>
