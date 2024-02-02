@@ -2,6 +2,7 @@
 import React from 'react';
 import './BusInfo.css';
 import { Button, Card, CardBody } from '@nextui-org/react';
+import { CompanyLogo } from '../icons';
 
 
 interface BusInfoProps {
@@ -17,18 +18,17 @@ interface BusInfoProps {
 
 const BusInfo: React.FC<BusInfoProps> = (props) => {
     return (
-        <Card className="flex bg-gray-600 m-3">
-            <CardBody>
-                <div className="flex row items-center">
-                    <div className="column">
-                        <h3>Name: {props.name}</h3>
-                        <p>Time: {props.departureTime}</p>
-                    </div>
-                    <div className="column">
-                        <p>{props.isAC ? 'AC' : 'Non-AC'}</p>
-                        <p>Fare: {props.fare} TK</p>
-                        <Button className="book-button" onClick={() => props.onButtonClick && props.onButtonClick()}>Book Now</Button>
-                    </div>
+        <Card className="flex bg-gray-600 mt-2 mb-2">
+            <CardBody className='flex flex-row'>
+                <div className="column text-nowrap">
+                    <CompanyLogo className="w-10 h-10" />
+                    <h3>Name: {props.name}</h3>
+                    <p className='text-nowrap'>Time: {props.departureTime}</p>
+                </div>
+                <div className="">
+                    <p>{props.isAC ? 'AC' : 'Non-AC'}</p>
+                    <p>Fare: {props.fare} TK</p>
+                    <Button className="book-button" onClick={() => props.onButtonClick && props.onButtonClick()}>Book Now</Button>
                 </div>
             </CardBody>
         </Card>

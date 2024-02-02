@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './BusSeatLayout.css';
 import { Button } from '@nextui-org/button';
 
@@ -12,13 +12,13 @@ export interface SeatProps {
 
 const Seat: React.FC<SeatProps> = ({ seatNumber, status, onSelect }) => {
     return (
-        <Button
-            className={`seat ${status}`}
-            isDisabled={status === 'occupied'}
+        <button
+            className={`seat rounded ${status}`}
+            disabled={status === 'occupied'}
             onClick={onSelect}
         >
             {seatNumber}
-        </Button>
+        </button>
     );
 };
 
@@ -38,7 +38,7 @@ interface SeatLayoutProps {
         booked: string;
         occupied: string;
     };
-    setSeatsButton?: (seats: string[]) => void;
+    setSeatsButton: (seats: string[]) => void;
 }
 
 const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
@@ -54,15 +54,16 @@ const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
                 if (prevSelectedSeats.length < 6) {
                     return [...prevSelectedSeats, seatNumber];
                 } else {
-                    setErrorMessage('You can select maximum 4 seats');
+                    setErrorMessage('You can select maximum 6 seats');
                     return prevSelectedSeats;
                 }
             }
         });
-        if (props.setSeatsButton) {
-            props.setSeatsButton(selectedSeats);
-        }
     };
+
+    useEffect(() => {
+        props.setSeatsButton(selectedSeats);
+    }, [props, selectedSeats]);
 
     const rows = 9;
     const columns = 5;
@@ -113,14 +114,14 @@ const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
 
         for (let col = 1; col <= columns; col++) {
 
-            const seatNumber = `${String.fromCharCode(64 + col - skip)}${col}`;
+            const seatNumber = `${String.fromCharCode(64 + col)}${rows + 1}`;
             const status = selectedSeats.includes(seatNumber) ? 'selected' : 'available';
 
             seats.push(<Seat
-                key={`driver-seat`}
+                key={seatNumber}
                 seatNumber={seatNumber}
                 status={status}
-                onSelect={() => handleSeatSelect(`A${col}`)}
+                onSelect={() => handleSeatSelect(seatNumber)}
             />);
         }
 

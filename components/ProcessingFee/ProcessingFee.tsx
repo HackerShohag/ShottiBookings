@@ -38,8 +38,8 @@ const ProcessingFee: React.FC<ProcessingFeeProps> = ({ seats, cost }) => {
             <TableBody>
                 {processingFeeObj.map((seat) => (
                     <TableRow key={seat.seatNumber}>
-                        <TableCell className={seat.seatNumber === 'Total' ? 'font-bold text-md' : ''}>{seat.seatNumber}</TableCell>
-                        <TableCell className={seat.seatNumber === 'Total' ? 'font-bold text-md' : ''}>{seat.cost}</TableCell>
+                        <TableCell className={seat.seatNumber === 'Total' ? 'font-bold text-md text-white' : ''}>{seat.seatNumber}</TableCell>
+                        <TableCell className={seat.seatNumber === 'Total' ? 'font-bold text-md text-white' : ''}>{seat.cost}</TableCell>
                     </TableRow>
                 ))}
             </TableBody>

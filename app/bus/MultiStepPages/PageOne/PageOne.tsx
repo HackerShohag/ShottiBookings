@@ -4,7 +4,7 @@ import { FormData } from '@/types';
 import { BorderContainer } from '@/components/Containers/Containers';
 import '@/components/BookingForm/BookingForm.css';
 
-import busImg from '@/public/assets/bus.png';
+import busImg from '@/public/assets/bus-logo.jpg';
 import { BasicForm } from '@/components/BookingForm/BasicForm'
 import { Spinner } from '@nextui-org/react';
 
@@ -37,7 +37,7 @@ const PageOne = ({ handleChange, routes, formData, processing, handleDataAvialbl
             <h2 className='text-white font-extrabold mb-10'>Bus Ticket Booking Service</h2>
             <div className='row-container'>
               <BasicForm routes={routes} formData={formData} handleChange={handleChange} handleDataAvialblity={handleDataAvialblity} />
-              {/* <Image src={busImg} alt="Image" /> */}
+              <Image height="250" className='rounded' src={busImg} alt="Image" />
             </div>
           </>
         )}

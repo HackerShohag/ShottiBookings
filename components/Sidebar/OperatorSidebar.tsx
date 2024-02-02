@@ -29,7 +29,7 @@ export const OperatorSidebarWrapper = () => {
   const { collapsed, setCollapsed } = useSidebarContext();
 
   return (
-    <aside className="h-screen z-[202] sticky top-0" style={{ height: "0vh" }}>
+    <aside className="h-screen z-0 sticky top-0" style={{ height: "0vh" }}>
       {collapsed ? (
         <div className={Sidebar.Overlay()} onClick={setCollapsed} />
       ) : null}

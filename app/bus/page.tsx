@@ -5,16 +5,14 @@ import { FormData, OfferedJourney } from "@/types";
 
 import MultiStepPage from "./MultiStepPages/MultiStepPages";
 import PageOne from "./MultiStepPages/PageOne/PageOne";
-import PageThree from "./MultiStepPages/PageThree/PageThree";
 import PageTwo from "./MultiStepPages/PageTwo/PageTwo";
 import { fetchRoutes, fetchOfferedJourney } from "./fetchFunction";
 import Head from "next/head";
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import SeatLayout from "@/components/BusSeatLayout/BusSeatLayout";
 import { siteConfig } from "@/config/site";
 import { useSession } from "next-auth/react";
 import ProcessingFee from "@/components/ProcessingFee/ProcessingFee";
-
 
 const BusService = () => {
 
@@ -29,7 +27,7 @@ const BusService = () => {
     const [routes, setRoutes] = useState<string[]>([]);
     const [offeredJourneys, setOfferedJourneys] = useState<OfferedJourney[]>([]);
     const [selectedID, setSelectedID] = useState<string>();
-    const [currentOfferedJourney, setCurrentOfferedJourney] = useState<OfferedJourney | null>(null); // Added currentOfferedJourney state
+    const [currentOfferedJourney, setCurrentOfferedJourney] = useState<OfferedJourney | null>(null);
 
     const [formData, setFormData] = useState<FormData>({
         origin: '',
@@ -38,13 +36,14 @@ const BusService = () => {
         numberOfTickets: 0,
     });
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const searchParams = new URLSearchParams();
-    searchParams.set('source', formData.origin);
-    searchParams.set('destination', formData.destination);
-    searchParams.set('date', formData.date);
-    if (typeof window !== 'undefined') {
-        window.history.pushState({}, '', `?${searchParams.toString()}`);
-    }
+
+    useEffect(() => {
+        searchParams.append('origin', formData.origin);
+        searchParams.append('destination', formData.destination);
+        searchParams.append('date', formData.date);
+    }, [formData, searchParams]);
 
 
     const handlePageOneChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -168,13 +167,11 @@ const BusService = () => {
 
     const setSeatsButton = (seats: string[]) => {
         setSelectedSeats(seats);
-        console.log(seats);
     }
 
     const formElements = [
         <PageOne key="pageOne" processing={processing} routes={routes} formData={formData} handleChange={handlePageOneChange} handleDataAvialblity={setIsNextButtonAvailable} />,
-        <PageTwo key="pageTwo" processing={processing} offeredJourney={dummyOfferedJourney} bookButtonHandle={bookButtonHandle} />,
-        <PageThree key="pageThree" />
+        <PageTwo key="pageTwo" processing={processing} offeredJourney={dummyOfferedJourney} bookButtonHandle={bookButtonHandle} />
     ];
 
     return (
@@ -191,7 +188,7 @@ const BusService = () => {
             </Head>
 
             <MultiStepPage MultiStepFormElements={formElements} nextButtonAvailable={isNextButtonAvailable} nextButtonFunction={nextButtonFunction} />
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} scrollBehavior="inside">
                 <ModalContent>
                     {(onClose) => (
                         <>
@@ -199,7 +196,9 @@ const BusService = () => {
                             <ModalBody>
                                 <SeatLayout setSeatsButton={setSeatsButton} ticketStatus={{ available: "Available", booked: "Selected", occupied: "Occupied" }} />
                                 {
-                                    selectedSeats.length > 0 && currentOfferedJourney ? <ProcessingFee seats={selectedSeats} cost={currentOfferedJourney.fare} /> : null
+                                    selectedSeats.length > 0 && currentOfferedJourney ?
+                                        <ProcessingFee seats={selectedSeats} cost={currentOfferedJourney.fare} />
+                                        : null
                                 }
                             </ModalBody>
                             <ModalFooter className="justify-between">

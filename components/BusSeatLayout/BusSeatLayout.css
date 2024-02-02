@@ -45,7 +45,7 @@
 /* Mobile Styles */
 @media (max-width: 768px) {
     .seat {
-        width: 40px;
+        width: 50px;
         height: 40px;
     }
 

@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 
 import { OperatorSidebarWrapper } from "./OperatorSidebar";
 import { AdminSidebarWrapper } from "./AdminSidebar";
+import { ModeratorSidebarWrapper } from "./ModeratorSidebar";
 import { usePathname } from "next/navigation";
 
 export default function SidebarWrapper() {
@@ -12,11 +13,13 @@ export default function SidebarWrapper() {
 
   session?.user.role === "admin";
   session?.user.role === "operator";
+  session?.user.role === "moderator";
 
   return (
     <> {pathname.includes("admin") && true ?
       <AdminSidebarWrapper /> : pathname.includes("operator") && true ?
-        <OperatorSidebarWrapper /> : null
+        <OperatorSidebarWrapper /> : pathname.includes("moderator") && true ?
+          <ModeratorSidebarWrapper /> : null
     }
     </>
   )

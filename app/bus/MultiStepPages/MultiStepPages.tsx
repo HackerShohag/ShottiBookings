@@ -20,7 +20,7 @@ function MultiStepPage({ MultiStepFormElements, nextButtonAvailable, nextButtonF
 
     return (
         <Card
-            className="flex flex-col justify-center border-none max-w-[900px] flex justify-center self-center"
+            className="flex flex-col justify-center border-none max-w-[900px] flex justify-center self-center mb-20"
             shadow="sm"
             style={{ backgroundColor: "#ff1596" }}
         >

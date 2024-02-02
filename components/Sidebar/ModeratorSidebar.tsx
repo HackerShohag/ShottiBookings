@@ -23,13 +23,13 @@ import { ChangeLogIcon } from "../icons/sidebar/changelog-icon";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-export const OperatorSidebarWrapper = () => {
+export const ModeratorSidebarWrapper = () => {
   const pathname = usePathname();
   const session = useSession();
   const { collapsed, setCollapsed } = useSidebarContext();
 
   return (
-    <aside className="h-screen z-[202] sticky top-0" style={{ height: "0vh" }}>
+    <aside className="h-screen z-0 sticky top-0" style={{ height: "0vh" }}>
       {collapsed ? (
         <div className={Sidebar.Overlay()} onClick={setCollapsed} />
       ) : null}
@@ -39,7 +39,7 @@ export const OperatorSidebarWrapper = () => {
         })}
       >
         {
-          session?.data?.user?.role === "operator" ? (
+          session?.data?.user?.role === "moderator" ? (
             <>
               <Card className="flex flex-row gap-2 p-2">
                 <Avatar name="OP" />
@@ -57,7 +57,7 @@ export const OperatorSidebarWrapper = () => {
                     isActive={pathname === "/"}
                     href="/"
                   />
-                  <SidebarMenu title="Operator Options">
+                  <SidebarMenu title="Moderator Options">
                     <SidebarItem
                       isActive={pathname === "/accounts"}
                       title="Profile"
@@ -66,7 +66,7 @@ export const OperatorSidebarWrapper = () => {
                     />
                     <SidebarItem
                       isActive={pathname === "/accounts"}
-                      title="Add Schedule"
+                      title="Add Route"
                       icon={<ScheduleIcon />}
                       onCick={() => { console.log("Accounts Clicked") }}
                     />

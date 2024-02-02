@@ -59,7 +59,7 @@ const PageTwo = ({ offeredJourney, bookButtonHandle, processing }: BasicFormProp
   });
 
   return (
-    <div className="mr-2 ml-2">
+    <div>
       <h1 className="text-2xl text-white">Available Buses from {offeredJourney.at(0)?.from} to {offeredJourney.at(0)?.to}</h1>
       {
         processing ? (

@@ -31,6 +31,10 @@ export const siteConfig = {
 	],
 	navAdminItems: [
 		{
+			label: "Dashboard",
+			href: "/admin/dashboard",
+		},
+		{
 			label: "Admins",
 			href: "/admin/dashboard/admins",
 		},
@@ -61,6 +65,10 @@ export const siteConfig = {
 	],
 	navOperatorItems: [
 		{
+			label: "Dashboard",
+			href: "/operator/dashboard",
+		},
+		{
 			label: "Bus",
 			href: "/operator/dashboard/buses",
 		},
@@ -70,6 +78,10 @@ export const siteConfig = {
 		}
 	],
 	navModeratorItems: [
+		{
+			label: "Dashboard",
+			href: "/moderator/dashboard",
+		},
 		{
 			label: "Bus",
 			href: "/moderator/dashboard/buses",

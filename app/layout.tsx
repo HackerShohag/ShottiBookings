@@ -46,18 +46,15 @@ export default function RootLayout({
 				}}
 			>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-					<SidebarWrapper />
 
-					<div className="relative flex flex-col h-screen">
+					<div className="relative flex flex-col h-screen mb-20">
 						<Navbar />
+						<SidebarWrapper />
 						<main className="container mx-auto max-w-7xl pt-0 px-6 flex-grow">
 							{children}
 						</main>
 						<footer className="w-full flex items-center justify-center">
-							{/* <p className="text-xs text-center text-gray-600">
-								Copyright © {new Date().getFullYear()} Shotti Bookings - All rights reserved
-							</p> */}
-							<BottomNavbar className="flex w-full hide-on-desktop" />
+							<BottomNavbar className="flex w-full fixed bottom-0" />
 						</footer>
 					</div>
 				</Providers>
