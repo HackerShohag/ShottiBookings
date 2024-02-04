@@ -13,6 +13,7 @@ import SeatLayout from "@/components/BusSeatLayout/BusSeatLayout";
 import { siteConfig } from "@/config/site";
 import { useSession } from "next-auth/react";
 import ProcessingFee from "@/components/ProcessingFee/ProcessingFee";
+import { createTicket } from "../../components/Ticket/Ticket";
 
 const BusService = () => {
 
@@ -57,7 +58,7 @@ const BusService = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': '' + session?.accessToken
+                // 'Authorization': '' + session?.accessToken
             },
             body: JSON.stringify({
                 "journey": selectedID,
@@ -69,6 +70,16 @@ const BusService = () => {
             .catch(err => console.log(err));
 
         console.log('Booked');
+
+        createTicket({
+            date: formData.date,
+            time: currentOfferedJourney?.startTime || 'unknown',
+            source: formData.origin,
+            destination: formData.destination,
+            seatNumbers: selectedSeats,
+            passengerName: session?.user?.name || 'unknown',
+            busName: currentOfferedJourney?.bus.no || 'unknown',
+        });
     }
 
 

@@ -50,6 +50,8 @@ export const options: NextAuthOptions = {
                 });
 
                 const data = await res.json();
+                console.log("Fuck ya");
+                console.log(res);
                 console.log(data);
 
                 if (res.ok && data) {

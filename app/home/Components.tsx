@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { TransparentContainer } from '@/components/Containers/Containers';
 import { useRouter } from 'next/navigation';
 
-const busLogo = require('@/public/assets/bus-logo.jpg');
+const busLogo = require('@/public/assets/bus-logo.png');
 const trainLogo = require('@/public/assets/train-logo.jpg');
 const hotelLogo = require('@/public/assets/hotel-logo.png');
 

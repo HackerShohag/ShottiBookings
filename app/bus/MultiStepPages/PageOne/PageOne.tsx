@@ -4,7 +4,7 @@ import { FormData } from '@/types';
 import { BorderContainer } from '@/components/Containers/Containers';
 import '@/components/BookingForm/BookingForm.css';
 
-import busImg from '@/public/assets/bus-logo.jpg';
+import busImg from '@/public/assets/bus.png';
 import { BasicForm } from '@/components/BookingForm/BasicForm'
 import { Spinner } from '@nextui-org/react';
 

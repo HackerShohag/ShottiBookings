@@ -133,8 +133,8 @@ export default function LoginForm() {
                             </Button>
                             <p className="text-center text-small">
                                 Don&apos;t have an account?{" "}
-                                <Link size="sm" href="/login">
-                                    Sign Up
+                                <Link size="sm" href="/register">
+                                    Register
                                 </Link>
                             </p>
                         </form>

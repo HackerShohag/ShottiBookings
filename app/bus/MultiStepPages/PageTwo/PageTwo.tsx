@@ -23,7 +23,7 @@ const renderOfferedJourney = (journeys: OfferedJourney[], bookButtonHandle: ((id
           id={journey?.bus?.no}
           seatAvailability={journey?.slot.length}
           departureTime={journey?.startTime}
-          image={busImg.src}
+          logo={busImg.src}
           fare={journey.fare}
           name={journey?.bus?.companyName}
           onButtonClick={() => { if (bookButtonHandle) { bookButtonHandle(journey.id) } }}

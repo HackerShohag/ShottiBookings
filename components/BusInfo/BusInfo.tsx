@@ -1,16 +1,14 @@
 // BusInfo.tsx
 import React from 'react';
 import './BusInfo.css';
-import { Button, Card, CardBody } from '@nextui-org/react';
-import { CompanyLogo } from '../icons';
-
+import { Button, Card, CardBody, Image } from '@nextui-org/react';
 
 interface BusInfoProps {
     name: string;
     id: string;
     seatAvailability: number;
     departureTime: string;
-    image: string;
+    logo: string;
     fare: number;
     isAC?: boolean;
     onButtonClick?: (() => void) | undefined;
@@ -21,7 +19,7 @@ const BusInfo: React.FC<BusInfoProps> = (props) => {
         <Card className="flex bg-gray-600 mt-2 mb-2">
             <CardBody className='flex flex-row'>
                 <div className="column text-nowrap">
-                    <CompanyLogo className="w-10 h-10" />
+                    <Image height='50' width='50' src={props.logo} alt="Bus Logo" />
                     <h3>Name: {props.name}</h3>
                     <p className='text-nowrap'>Time: {props.departureTime}</p>
                 </div>
