@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HidePassIcon, ShowPassIcon } from './icons';
 
 type ShowHidePasswordProps = {
@@ -8,13 +8,17 @@ type ShowHidePasswordProps = {
 export default function ShowHidePassword({ onClick }: ShowHidePasswordProps) {
     const [showPassword, setShowPassword] = useState(false);
 
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
+    useEffect(() => {
         onClick(showPassword);
-    }
+    }, [showPassword, onClick]);
+
 
     return (
-        <div onClick={togglePasswordVisibility} className='cursor-pointer'>
+        <div onClick={
+            () => {
+                setShowPassword(!showPassword);
+            }}
+            className='cursor-pointer'>
             {showPassword ? <ShowPassIcon /> : <HidePassIcon />}
         </div>
     )

@@ -1,22 +1,22 @@
 'use client';
 
-import Content from "@/components/Dashboard/OperatorContent";
+import { Accounts } from "@/components/accounts";
 import { Button, Card, CardBody, CardFooter, CardHeader, CircularProgress } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export default function OperatorDashboard() {
+export default function ModeratorDashboard() {
     const { data: session, status } = useSession();
     const router = useRouter();
 
-    if (status !== 'loading' && session?.user.role !== "operator") {
+    if (status !== 'loading' && session?.user.role !== "moderator") {
         router.replace("/");
     }
 
     return (
         <>
             {status === 'loading' ? (
-                <Card className="flex flex-col w-full justify-center">
+                <Card className="flex flex-col w-full justify-center mt-10">
                     <CardHeader className="text-2xl justify-center">Loading...</CardHeader>
                     <CardBody className="flex flex-col w-full items-center h-full">
                         <CircularProgress className="flex flex-col w-full justify-center" color="primary" size="lg" aria-label="Loading..." />
@@ -26,8 +26,8 @@ export default function OperatorDashboard() {
                     </CardFooter>
                 </Card>
             ) : (
-                session?.user.role === 'operator' ? (
-                    <Content />
+                session?.user.role === 'moderator' ? (
+                    <Accounts userType="bus" />
                 ) : (
                     <Card className="flex justify-center">
                         <CardHeader className="flex justify-center">Access Denied</CardHeader>

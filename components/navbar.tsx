@@ -172,7 +172,7 @@ export const Navbar = () => {
 								showDivider
 								hidden={session?.user.role !== 'moderator'}
 							>
-								{siteConfig.navOperatorItems.map((item, index) => (
+								{siteConfig.navModeratorItems.map((item, index) => (
 									<ListboxItem
 										className="text-black dark:text-white"
 										key={`${item}-${index}`}

@@ -1,6 +1,6 @@
 'use client';
 
-import Content from "@/components/Dashboard/OperatorContent";
+import Content from "@/components/Dashboard/ModeratorContent";
 import { Button, Card, CardBody, CardFooter, CardHeader, CircularProgress } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -9,7 +9,7 @@ export default function OperatorDashboard() {
     const { data: session, status } = useSession();
     const router = useRouter();
 
-    if (status !== 'loading' && session?.user.role !== "operator") {
+    if (status !== 'loading' && session?.user.role !== "moderator") {
         router.replace("/");
     }
 
@@ -26,7 +26,7 @@ export default function OperatorDashboard() {
                     </CardFooter>
                 </Card>
             ) : (
-                session?.user.role === 'operator' ? (
+                session?.user.role === 'moderator' ? (
                     <Content />
                 ) : (
                     <Card className="flex justify-center">

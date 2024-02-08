@@ -44,12 +44,12 @@ export const BusTable = (props: AccountsProps) => {
   const userTypeReplace = {
     bus: "B",
     offeredJourney: "J",
-  }[props.userType] || "C";
+  }[props.userType] || "B";
 
   const userAPI = {
     bus: "bus",
     offeredJourney: "offeredJourney",
-  }[props.userType] || "user";
+  }[props.userType] || "bus";
 
   const columns = [
     { name: 'COMPANY NAME', uid: 'companyName' },
@@ -139,7 +139,7 @@ export const BusTable = (props: AccountsProps) => {
               {noUserFound ? (
                 <CardBody className="flex justify-center items-center">
                   <CardHeader className="flex justify-center items-center" style={{ color: 'red' }}>
-                    <h3 className="text-xl font-semibold">No {props.userType.charAt(0).toUpperCase() + props.userType.slice(1)}s Found</h3>
+                    <h3 className="text-xl font-semibold">No {props.userType.charAt(0).toUpperCase() + props.userType.slice(1)} Found</h3>
                   </CardHeader>
                   <div className="flex flex-col gap-4 items-center">
                     <p>

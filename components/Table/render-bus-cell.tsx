@@ -36,10 +36,6 @@ export const RenderBusCell = ({ user, columnKey, handlers, userType }: Props) =>
       return (
         <span>{user.capacity}</span>
       );
-    // case "seats":
-    //   return (
-    //     <span>{user.slot}</span>
-    //   );
 
     case "actions":
       return (

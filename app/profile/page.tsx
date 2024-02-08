@@ -6,6 +6,17 @@ import { useSession } from "next-auth/react";
 import { siteConfig } from "@/config/site";
 import { useRouter } from "next/navigation";
 
+const dashboardTabs = (role: string, router: any) => {
+    const dashboardPath = `/${role}/dashboard`;
+
+    return (
+        <div className="flex justify-between m-2">
+            <Button color="primary" onClick={() => { router.push('/'); router.refresh() }}>Go Home</Button>
+            {role && <Button color="danger" onClick={() => { router.push(dashboardPath); router.refresh() }}>{role.charAt(0).toUpperCase() + role.slice(1)} Dashboard</Button>}
+        </div>
+    );
+}
+
 export default function ProfilePage() {
     const { data: session, status } = useSession();
     const router = useRouter();
@@ -130,17 +141,8 @@ export default function ProfilePage() {
     return (
         <div className="flex w-full flex-col">
             {
-                session?.user.role === 'admin' ?
-                    <div className="flex justify-between m-2">
-                        <Button color="primary" onClick={() => { router.push('/'); router.refresh() }}>Go Home</Button>
-                        <Button color="danger" onClick={() => { router.push('/admin/dashboard'); router.refresh() }}>Admin Dashboard</Button>
-                    </div> :
-                    session?.user.role === 'operator' ?
-                        <div className="flex justify-between m-2">
-                            <Button color="primary" onClick={() => { router.push('/'); router.refresh() }}>Go Home</Button>
-                            <Button color="danger" onClick={() => { router.push('/operator/dashboard'); router.refresh() }}>Operator Dashboard</Button>
-                        </div> :
-                        null
+                session?.user.role !== 'customer' &&
+                dashboardTabs(session?.user.role ?? '', router)
             }
             {
                 status === 'loading' ?
