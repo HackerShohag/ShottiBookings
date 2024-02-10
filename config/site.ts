@@ -147,7 +147,7 @@ export const siteConfig = {
 		register: "/register",
 	},
 	backendServer: {
-		address: "https://booking-system-phi.vercel.app/api",
+		address: "https://backend-server.shottibookings.com/api",
 	},
 	companyName: "Shotti Bookings",
 };
