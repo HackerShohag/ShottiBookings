@@ -81,14 +81,14 @@ const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
                     onSelect={() => handleSeatSelect(`Driver`)}
                 />);
             } else {
-                seats.push(<BlankSeat />);
+                seats.push(<BlankSeat key={`blank-${col}`} />);
             }
         }
 
         for (let row = 1; row <= rows; row++) {
             for (let col = 1; col <= columns; col++) {
                 if (col === 3) {
-                    seats.push(<BlankSeat key={`blank-${row}`} />);
+                    seats.push(<BlankSeat key={`blank-${row + col + 10}`} />);
                     continue;
                 }
 

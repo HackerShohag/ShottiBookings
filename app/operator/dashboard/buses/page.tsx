@@ -1,11 +1,11 @@
 'use client';
 
+import { Accounts } from "@/components/accounts";
 import { Button, Card, CardBody, CardFooter, CardHeader, CircularProgress } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Input } from "@nextui-org/react";
 
-export default function OperatorDashboard() {
+export default function ModeratorDashboard() {
     const { data: session, status } = useSession();
     const router = useRouter();
 
@@ -16,7 +16,7 @@ export default function OperatorDashboard() {
     return (
         <>
             {status === 'loading' ? (
-                <Card className="flex flex-col w-full justify-center">
+                <Card className="flex flex-col w-full justify-center mt-10">
                     <CardHeader className="text-2xl justify-center">Loading...</CardHeader>
                     <CardBody className="flex flex-col w-full items-center h-full">
                         <CircularProgress className="flex flex-col w-full justify-center" color="primary" size="lg" aria-label="Loading..." />
@@ -27,17 +27,7 @@ export default function OperatorDashboard() {
                 </Card>
             ) : (
                 session?.user.role === 'moderator' ? (
-                    <Card className="flex justify-center">
-                        <CardHeader className="flex justify-center">Add Route</CardHeader>
-                        <CardBody className="flex justify-center items-center gap-5">
-                            <Input placeholder="Source" />
-                            <Input placeholder="Destination" />
-                        </CardBody>
-                        <CardFooter className="flex justify-center">
-                            <Button color="danger" onClick={undefined}>Add</Button>
-                        </CardFooter>
-                    </Card>
-
+                    <Accounts userType="bus" />
                 ) : (
                     <Card className="flex justify-center">
                         <CardHeader className="flex justify-center">Access Denied</CardHeader>

@@ -24,6 +24,7 @@ interface AddUserProps {
 export const AddUser: React.FC<AddUserProps> = (props) => {
   const { data: session, status } = useSession();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const { isOpen: isSuccessOpen, onOpen: onSuccessOpen, onOpenChange: onSuccessOpenChange, onClose: onSuccessClose } = useDisclosure();
   const { isOpen: isErrorOpen, onOpen: onErrorOpen, onOpenChange: onErrorOpenChange, onClose: onErrorClose } = useDisclosure();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -61,6 +62,7 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
 
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const user = {
@@ -148,12 +150,15 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
       }
     }
 
-    if (companyNameFocusChanged) { // Added validation for companyName
-      if (companyName.trim() === "") {
-        setCompanyNameError("Please enter the company name");
-        isValid = false;
-      } else {
-        setCompanyNameError("");
+    if (props.userType === "moderators") {
+
+      if (companyNameFocusChanged) { // Added validation for companyName
+        if (companyName.trim() === "") {
+          setCompanyNameError("Please enter the company name");
+          isValid = false;
+        } else {
+          setCompanyNameError("");
+        }
       }
     }
 
@@ -175,26 +180,7 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
       }
     }
 
-  }, [
-    fullName,
-    email,
-    phoneNumber,
-    gender,
-    password,
-    confirmPassword,
-    companyName, // Added companyName to the dependency array
-    routeFrom, // Added routeFrom to the dependency array
-    routeTo, // Added routeTo to the dependency array
-    fullNameFocusChanged,
-    emailFocusChanged,
-    phoneNumberFocusChanged,
-    genderFocusChanged,
-    passwordFocusChanged,
-    confirmPasswordFocusChanged,
-    companyNameFocusChanged, // Added companyNameFocusChanged to the dependency array
-    routeFromFocusChanged, // Added routeFromFocusChanged to the dependency array
-    routeToFocusChanged, // Added routeToFocusChanged to the dependency array
-  ]);
+  }, [fullName, email, phoneNumber, gender, password, confirmPassword, companyName, routeFrom, routeTo, fullNameFocusChanged, emailFocusChanged, phoneNumberFocusChanged, genderFocusChanged, passwordFocusChanged, confirmPasswordFocusChanged, companyNameFocusChanged, routeFromFocusChanged, routeToFocusChanged, props.userType]);
 
   const handleAddUser = () => {
     setErrorMessage('');
@@ -243,7 +229,7 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
       },
     };
 
-    if (props.userType === "moderators") {
+    if (props.userType === "operators") {
       userData.user = {
         ...userData.user,
         companyName: companyName,
@@ -281,6 +267,13 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
         setProcessing(false);
         return false;
       })
+    if (success) {
+      onClose();
+    }
+    onSuccessOpen();
+    setSuccessMessage('');
+    setSuccessMessage(props.userType + " Creation Successful!")
+
     return false;
   };
 
@@ -289,7 +282,7 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
       <Button onPress={onOpen} color="primary">
         Add {props.userType ? props.userType : "User"}
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal scrollBehavior="inside" isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           {(onClose) => (
 
@@ -346,17 +339,21 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
 
                   {
                     props.userType === "moderators" ?
+                      <Input
+                        label="Company Name"
+                        variant="bordered"
+                        value={companyName}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          setCompanyName(e.target.value);
+                        }}
+                        errorMessage={companyNameError}
+                        onFocus={() => setCompanyNameFocusChanged(true)}
+                      /> : null
+                  }
+
+                  {
+                    props.userType === "operators" ?
                       <>
-                        <Input
-                          label="Company Name"
-                          variant="bordered"
-                          value={companyName}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                            setCompanyName(e.target.value);
-                          }}
-                          errorMessage={companyNameError}
-                          onFocus={() => setCompanyNameFocusChanged(true)}
-                        />
                         <label>Please set operating route</label>
                         <Input
                           label="From:"
@@ -426,6 +423,18 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onPress={onErrorClose}>
+              OK
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isSuccessOpen} onOpenChange={onSuccessOpenChange} placement="top-center">
+        <ModalContent>
+          <ModalBody>
+            {successMessage ? successMessage : "User Creation Failed!"}
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onPress={onSuccessClose}>
               OK
             </Button>
           </ModalFooter>

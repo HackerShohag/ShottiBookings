@@ -3,23 +3,11 @@
 import React from "react";
 import { Sidebar } from "./sidebar.styles";
 import { Avatar, Card, CircularProgress, Tooltip } from "@nextui-org/react";
-import { CompaniesDropdown } from "./companies-dropdown";
 import { HomeIcon } from "../icons/sidebar/home-icon";
-import { PaymentsIcon } from "../icons/sidebar/payments-icon";
-import { BalanceIcon } from "../icons/sidebar/balance-icon";
 import { AccountsIcon, ScheduleIcon } from "@/components/icons";
-import { CustomersIcon } from "../icons/sidebar/customers-icon";
-import { ProductsIcon } from "../icons/sidebar/products-icon";
-import { ReportsIcon } from "../icons/sidebar/reports-icon";
-import { DevIcon } from "../icons/sidebar/dev-icon";
-import { ViewIcon } from "../icons/sidebar/view-icon";
-import { SettingsIcon } from "../icons/sidebar/settings-icon";
-import { CollapseItems } from "./collapse-items";
 import { SidebarItem } from "./sidebar-item";
 import { SidebarMenu } from "./sidebar-menu";
-import { FilterIcon } from "../icons/sidebar/filter-icon";
 import { useSidebarContext } from "../layout/layout-context";
-import { ChangeLogIcon } from "../icons/sidebar/changelog-icon";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 
@@ -42,7 +30,7 @@ export const ModeratorSidebarWrapper = () => {
           session?.data?.user?.role === "moderator" ? (
             <>
               <Card className="flex flex-row gap-2 p-2">
-                <Avatar name="OP" />
+                <Avatar name="MOD" />
                 <div className="flex flex-col">
                   <p className="text-sm text-gray-500 font-medium mt-2">
                     {session.data?.user?.name}
@@ -59,16 +47,27 @@ export const ModeratorSidebarWrapper = () => {
                   />
                   <SidebarMenu title="Moderator Options">
                     <SidebarItem
-                      isActive={pathname === "/accounts"}
                       title="Profile"
                       icon={<AccountsIcon />}
-                      onCick={() => { console.log("Accounts Clicked") }}
+                      href="/profile"
                     />
                     <SidebarItem
-                      isActive={pathname === "/accounts"}
+                      isActive={pathname === "/moderator/dashboard/routes"}
+                      href="/moderator/dashboard/routes"
                       title="Add Route"
                       icon={<ScheduleIcon />}
-                      onCick={() => { console.log("Accounts Clicked") }}
+                    />
+                    <SidebarItem
+                      isActive={pathname === "/moderator/dashboard/operators"}
+                      title="Operators"
+                      href="/moderator/dashboard/operators"
+                      icon={<ScheduleIcon />}
+                    />
+                    <SidebarItem
+                      isActive={pathname === "/moderator/dashboard/buses"}
+                      href="/moderator/dashboard/buses"
+                      title="Buses"
+                      icon={<ScheduleIcon />}
                     />
                   </SidebarMenu>
                 </div>

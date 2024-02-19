@@ -62,13 +62,16 @@ export const OperatorSidebarWrapper = () => {
                       isActive={pathname === "/accounts"}
                       title="Profile"
                       icon={<AccountsIcon />}
-                      onCick={() => { console.log("Accounts Clicked") }}
+                    />
+                    <SidebarItem
+                      isActive={pathname === "/accounts"}
+                      title="Bus Schedule"
+                      icon={<ScheduleIcon />}
                     />
                     <SidebarItem
                       isActive={pathname === "/accounts"}
                       title="Add Schedule"
                       icon={<ScheduleIcon />}
-                      onCick={() => { console.log("Accounts Clicked") }}
                     />
                   </SidebarMenu>
                 </div>

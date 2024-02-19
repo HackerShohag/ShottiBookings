@@ -3,13 +3,13 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, CircularProgress } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Input } from "@nextui-org/react";
+import { Accounts } from "@/components/accounts";
 
-export default function OperatorDashboard() {
+export default function AdminDashboard() {
     const { data: session, status } = useSession();
     const router = useRouter();
 
-    if (status !== 'loading' && session?.user.role !== "moderator") {
+    if (status !== 'loading' && session?.user.role !== "admin") {
         router.replace("/");
     }
 
@@ -26,18 +26,8 @@ export default function OperatorDashboard() {
                     </CardFooter>
                 </Card>
             ) : (
-                session?.user.role === 'moderator' ? (
-                    <Card className="flex justify-center">
-                        <CardHeader className="flex justify-center">Add Route</CardHeader>
-                        <CardBody className="flex justify-center items-center gap-5">
-                            <Input placeholder="Source" />
-                            <Input placeholder="Destination" />
-                        </CardBody>
-                        <CardFooter className="flex justify-center">
-                            <Button color="danger" onClick={undefined}>Add</Button>
-                        </CardFooter>
-                    </Card>
-
+                session?.user.role === 'admin' ? (
+                    <Accounts userType="drivers" />
                 ) : (
                     <Card className="flex justify-center">
                         <CardHeader className="flex justify-center">Access Denied</CardHeader>

@@ -8,17 +8,13 @@ import { ModeratorSidebarWrapper } from "./ModeratorSidebar";
 import { usePathname } from "next/navigation";
 
 export default function SidebarWrapper() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const pathname = usePathname();
 
-  session?.user.role === "admin";
-  session?.user.role === "operator";
-  session?.user.role === "moderator";
-
   return (
-    <> {pathname.includes("admin") && true ?
-      <AdminSidebarWrapper /> : pathname.includes("operator") && true ?
-        <OperatorSidebarWrapper /> : pathname.includes("moderator") && true ?
+    <> {pathname.includes("admin") && session?.user.role === "admin" ?
+      <AdminSidebarWrapper /> : pathname.includes("operator") && session?.user.role === "operator" ?
+        <OperatorSidebarWrapper /> : pathname.includes("moderator") && session?.user.role === "moderator" ?
           <ModeratorSidebarWrapper /> : null
     }
     </>

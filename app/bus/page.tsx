@@ -1,24 +1,25 @@
 'use client';
 
+import Head from "next/head";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { FormData, OfferedJourney } from "@/types";
 
 import MultiStepPage from "./MultiStepPages/MultiStepPages";
 import PageOne from "./MultiStepPages/PageOne/PageOne";
 import PageTwo from "./MultiStepPages/PageTwo/PageTwo";
 import { fetchRoutes, fetchOfferedJourney } from "./fetchFunction";
-import Head from "next/head";
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
 import SeatLayout from "@/components/BusSeatLayout/BusSeatLayout";
 import { siteConfig } from "@/config/site";
-import { useSession } from "next-auth/react";
 import ProcessingFee from "@/components/ProcessingFee/ProcessingFee";
 import { createTicket } from "../../components/Ticket/Ticket";
 
 const BusService = () => {
 
     const { data: session, status } = useSession();
-
+    const router = useRouter();
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
@@ -54,32 +55,36 @@ const BusService = () => {
 
     const handleBook = () => {
 
+        if (status !== 'authenticated') {
+            router.push('/login')
+            return;
+        }
+
         fetch(siteConfig.backendServer.address + '/booking/create-booking', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization': '' + session?.accessToken
+                'Authorization': '' + session?.accessToken
             },
             body: JSON.stringify({
-                "journey": selectedID,
-                "userId": 1,
-                "slot": selectedSeats,
+                "journey": "65a93fb3683980955d915348",
+                "slot": [selectedSeats.join(',')] || [],
             })
         }).then(res => res.json())
             .then(data => console.log(data))
             .catch(err => console.log(err));
 
-        console.log('Booked');
+        console.log([selectedSeats.join(',')]);
 
-        createTicket({
-            date: formData.date,
-            time: currentOfferedJourney?.startTime || 'unknown',
-            source: formData.origin,
-            destination: formData.destination,
-            seatNumbers: selectedSeats,
-            passengerName: session?.user?.name || 'unknown',
-            busName: currentOfferedJourney?.bus.no || 'unknown',
-        });
+        // createTicket({
+        //     date: formData.date,
+        //     time: currentOfferedJourney?.startTime || 'unknown',
+        //     source: formData.origin,
+        //     destination: formData.destination,
+        //     seatNumbers: selectedSeats,
+        //     passengerName: session?.user?.name || 'unknown',
+        //     busName: currentOfferedJourney?.bus.no || 'unknown',
+        // });
     }
 
 

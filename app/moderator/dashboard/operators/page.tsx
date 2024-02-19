@@ -3,9 +3,9 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, CircularProgress } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Input } from "@nextui-org/react";
+import { Accounts } from "@/components/accounts";
 
-export default function OperatorDashboard() {
+export default function ModeratorDashboard() {
     const { data: session, status } = useSession();
     const router = useRouter();
 
@@ -27,17 +27,7 @@ export default function OperatorDashboard() {
                 </Card>
             ) : (
                 session?.user.role === 'moderator' ? (
-                    <Card className="flex justify-center">
-                        <CardHeader className="flex justify-center">Add Route</CardHeader>
-                        <CardBody className="flex justify-center items-center gap-5">
-                            <Input placeholder="Source" />
-                            <Input placeholder="Destination" />
-                        </CardBody>
-                        <CardFooter className="flex justify-center">
-                            <Button color="danger" onClick={undefined}>Add</Button>
-                        </CardFooter>
-                    </Card>
-
+                    <Accounts userType="operators" />
                 ) : (
                     <Card className="flex justify-center">
                         <CardHeader className="flex justify-center">Access Denied</CardHeader>

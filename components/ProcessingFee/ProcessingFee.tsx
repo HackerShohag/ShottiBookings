@@ -30,7 +30,7 @@ const ProcessingFee: React.FC<ProcessingFeeProps> = ({ seats, cost }) => {
 
 
     return (
-        <Table>
+        <Table aria-label="Processing Fee Table">
             <TableHeader>
                 <TableColumn className='text-black dark:text-white text-lg'>Seat Number</TableColumn>
                 <TableColumn className='text-black dark:text-white text-lg'>Cost</TableColumn>
