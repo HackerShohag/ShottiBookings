@@ -64,12 +64,14 @@ export const OperatorSidebarWrapper = () => {
                       icon={<AccountsIcon />}
                     />
                     <SidebarItem
-                      isActive={pathname === "/accounts"}
+                      isActive={pathname === "/operator/dashboard/buses"}
+                      href="/operator/dashboard/buses"
                       title="Bus Schedule"
                       icon={<ScheduleIcon />}
                     />
                     <SidebarItem
-                      isActive={pathname === "/accounts"}
+                      isActive={pathname === "/operator/dashboard/schedules"}
+                      href="/operator/dashboard/schedules"
                       title="Add Schedule"
                       icon={<ScheduleIcon />}
                     />
