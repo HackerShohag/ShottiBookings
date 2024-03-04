@@ -229,6 +229,13 @@ export const AddUser: React.FC<AddUserProps> = (props) => {
       },
     };
 
+    if (props.userType === "moderators") {
+      userData.user = {
+        ...userData.user,
+        companyName: companyName,
+      };
+    }
+
     if (props.userType === "operators") {
       userData.user = {
         ...userData.user,
