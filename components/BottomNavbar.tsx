@@ -27,6 +27,9 @@ const BottomNavbar: React.FC<BottomNavbarProps> = ({ className }) => {
 			case 4:
 				router.push('/login');
 				break;
+			case 5:
+				router.push('https://m.me/231586346707525');
+				break;
 			default:
 				break;
 		}
@@ -88,6 +91,16 @@ const BottomNavbar: React.FC<BottomNavbarProps> = ({ className }) => {
 						</svg>
 					</div>
 					<h1 className="text-sm text-center pb-2">Login</h1>
+				</div>
+			</li>
+			<li className="w-full" onClick={() => handleClick(5)}>
+				<div className="button text-white hover:bg-white" style={{ cursor: 'pointer', backgroundColor: "#ff1596" }}>
+					<div className="flex items-center justify-center">
+						<svg className="w-6 h-6 m-2" fill="none" stroke="currentColor" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+							<path d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.639.639 0 00-.427.03l-1.588.702a.64.64 0 01-.898-.566l-.044-1.423a.639.639 0 00-.215-.456C.956 12.108 0 10.092 0 7.76zm5.546-1.459l-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 01.578-.002l1.869 1.402a1.2 1.2 0 001.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 01-.578.002L7.281 5.98a1.2 1.2 0 00-1.735.32z" />
+						</svg>
+					</div>
+					<h1 className="text-sm text-center pb-2">Chat</h1>
 				</div>
 			</li>
 		</ul>

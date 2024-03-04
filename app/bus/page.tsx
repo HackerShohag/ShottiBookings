@@ -15,6 +15,7 @@ import SeatLayout from "@/components/BusSeatLayout/BusSeatLayout";
 import { siteConfig } from "@/config/site";
 import ProcessingFee from "@/components/ProcessingFee/ProcessingFee";
 import { createTicket } from "../../components/Ticket/Ticket";
+import Link from "next/link";
 
 const BusService = () => {
 
@@ -60,19 +61,19 @@ const BusService = () => {
             return;
         }
 
-        fetch(siteConfig.backendServer.address + '/booking/create-booking', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': '' + session?.accessToken
-            },
-            body: JSON.stringify({
-                "journey": "65a93fb3683980955d915348",
-                "slot": [selectedSeats.join(',')] || [],
-            })
-        }).then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+        // fetch(siteConfig.backendServer.address + '/booking/create-booking', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': '' + session?.accessToken
+        //     },
+        //     body: JSON.stringify({
+        //         "journey": "65a93fb3683980955d915348",
+        //         "slot": [selectedSeats.join(',')] || [],
+        //     })
+        // }).then(res => res.json())
+        //     .then(data => console.log(data))
+        //     .catch(err => console.log(err));
 
         console.log([selectedSeats.join(',')]);
 
@@ -192,17 +193,6 @@ const BusService = () => {
 
     return (
         <>
-            <Head>
-                <title>
-                    Bus Ticket Booking Service | Shotti Bookings
-                </title>
-                <meta
-                    name="description"
-                    content="Bus Ticket Booking Service | Shotti Bookings"
-                    key="desc"
-                />
-            </Head>
-
             <MultiStepPage MultiStepFormElements={formElements} nextButtonAvailable={isNextButtonAvailable} nextButtonFunction={nextButtonFunction} />
             <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} scrollBehavior="inside">
                 <ModalContent>
@@ -219,7 +209,16 @@ const BusService = () => {
                             </ModalBody>
                             <ModalFooter className="justify-between">
                                 <Button variant="light" color="danger" onClick={onClose}>Cancel</Button>
-                                <Button color="primary" onClick={handleBook}>Book</Button>
+                                <Button color="primary" onClick={handleBook}>
+                                    <Link
+                                        href={{
+                                            pathname: '/payment',
+                                            query: "data" // the data
+                                        }}
+                                    >
+                                        Book
+                                    </Link>
+                                </Button>
                             </ModalFooter>
                         </>
                     )}
