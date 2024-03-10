@@ -14,12 +14,13 @@ import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Table
 import SeatLayout from "@/components/BusSeatLayout/BusSeatLayout";
 import { siteConfig } from "@/config/site";
 import ProcessingFee from "@/components/ProcessingFee/ProcessingFee";
-import { createTicket } from "../../components/Ticket/Ticket";
+import { useData } from "@/contex/DataContex";
 import Link from "next/link";
 
 const BusService = () => {
 
     const { data: session, status } = useSession();
+    const { data, setData } = useData();
     const router = useRouter();
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -86,6 +87,15 @@ const BusService = () => {
         //     passengerName: session?.user?.name || 'unknown',
         //     busName: currentOfferedJourney?.bus.no || 'unknown',
         // });
+        setData({
+            date: formData.date,
+            time: currentOfferedJourney?.startTime || 'unknown',
+            source: formData.origin,
+            destination: formData.destination,
+            seatNumbers: selectedSeats,
+            passengerName: session?.user?.name || 'unknown',
+            busName: currentOfferedJourney?.bus.no || 'unknown',
+        });
     }
 
 

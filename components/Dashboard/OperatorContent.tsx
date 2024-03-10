@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Card, CardBody, CardHeader, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip, useDisclosure } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip, getKeyValue, useDisclosure } from "@nextui-org/react";
 import { useState } from "react";
 import SeatLayout from "../BusSeatLayout/BusSeatLayout";
 
@@ -8,6 +8,7 @@ export default function Content() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
   const { isOpen: isDateModalOpen, onOpen: onDateModalOpen, onClose: onDateModalClose } = useDisclosure();
+  const { isOpen: isDetailsModalOpen, onOpen: onDetailsModalOpen, onClose: onDetailsModalClose } = useDisclosure();
   const [currentButSeats, setCurrentBusSeats] = useState<number[]>([]);
   const [selectedSchedule, setSelectedSchedule] = useState<number>();
 
@@ -73,6 +74,51 @@ export default function Content() {
     return `${formattedHour}:${minute} ${amPm}`;
   };
 
+
+  // dummy table data
+
+  const rows = [
+    {
+      key: "1",
+      name: "Tony Reichert",
+      role: "Own",
+      status: "D1, A1",
+    },
+    {
+      key: "2",
+      name: "Zoey Lang",
+      role: "Own",
+      status: "B2, B4, B3",
+    },
+    {
+      key: "3",
+      name: "Jane Fisher",
+      role: "Own",
+      status: "H1, H2",
+    },
+    {
+      key: "4",
+      name: "William Howard",
+      role: "Own",
+      status: "A1, A2",
+    },
+  ];
+
+  const columns = [
+    {
+      key: "name",
+      label: "Name",
+    },
+    {
+      key: "status",
+      label: "Seats",
+    },
+    {
+      key: "role",
+      label: "Operated By",
+    },
+  ];
+
   return (
     <div className="flex flex-col h-full lg:px-6 gap-5">
       <h1 className="flex justify-center text-3xl font-bold">Operator Dashboard</h1>
@@ -137,6 +183,13 @@ export default function Content() {
                   <Button>
                     Cancel Ticket
                   </Button>
+                  <Button
+                    onClick={() => {
+                      onDetailsModalOpen();
+                    }}
+                  >
+                    Check Details
+                  </Button>
                   <Button>
                     Book Ticket
                   </Button>
@@ -150,7 +203,7 @@ export default function Content() {
       </Modal>
       <Modal isOpen={isModalOpen} onOpenChange={onModalClose}>
         <ModalContent>
-          {(onClose) => (
+          {(onModalClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">Enter Text</ModalHeader>
               <ModalBody>
@@ -166,7 +219,7 @@ export default function Content() {
       </Modal>
       <Modal isOpen={isDateModalOpen} onOpenChange={onDateModalClose}>
         <ModalContent>
-          {(onClose) => (
+          {(onDateModalClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">Enter Date</ModalHeader>
               <ModalBody>
@@ -175,6 +228,32 @@ export default function Content() {
               <ModalFooter>
                 <Button variant="light" color="danger" onClick={onDateModalClose}>Close</Button>
                 <Button color="primary" onClick={changeDate}>Change Date</Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isDetailsModalOpen} onOpenChange={onDetailsModalClose}>
+        <ModalContent>
+          {(onDetailsModalClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Ticket Details</ModalHeader>
+              <ModalBody>
+                <Table aria-label="Example table with dynamic content">
+                  <TableHeader columns={columns}>
+                    {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+                  </TableHeader>
+                  <TableBody items={rows}>
+                    {(item) => (
+                      <TableRow key={item.key}>
+                        {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </ModalBody>
+              <ModalFooter>
+                <Button variant="light" color="danger" onClick={onDetailsModalClose}>Close</Button>
               </ModalFooter>
             </>
           )}
