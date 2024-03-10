@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import bkashImage from '@/public/assets/BKash.png'
-import sslCommerzImage from '@/public/assets/sslcommerz.png'
+import nagadImage from '@/public/assets/nagad.png'
 import { Button, Card } from '@nextui-org/react';
 import { siteConfig } from '@/config/site';
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -57,11 +57,11 @@ function PaymentPage() {
                     </Button>
                 </Card>
                 <Card className="flex flex-col items-center justify-center gap-4 p-4">
-                    <Image src={sslCommerzImage} alt="SSLCommerz" />
+                    <Image src={nagadImage} alt="SSLCommerz" />
                     <Button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
                     >
-                        SSLCommerz
+                        Nagad
                     </Button>
                 </Card>
             </div>

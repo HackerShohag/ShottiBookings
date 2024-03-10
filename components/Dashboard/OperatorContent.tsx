@@ -130,8 +130,8 @@ export default function Content() {
             <>
               <ModalHeader className="flex flex-col gap-1">Bus Tickets</ModalHeader>
               <ModalBody>
-                <SeatLayout ticketStatus={{ available: "Available", booked: "Booked", occupied: "Reserved" }} setSeatsButton={function (seats: string[]): void {
-                  throw new Error("Function not implemented.");
+                <SeatLayout seatStatus={{ available: "Available", booked: "Booked", occupied: "Reserved" }} setSeatsButton={function (seats: string[]): void {
+                  console.log(seats);
                 }} />
                 <div className="flex felx-row justify-center gap-2">
                   <Button>

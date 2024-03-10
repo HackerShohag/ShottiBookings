@@ -35,11 +35,15 @@
 }
 
 .selected {
-    background-color: #4a154b;
+    background-color: #dfcd2d;
 }
 
 .occupied {
     background-color: grey;
+}
+
+.booked {
+    background-color: #4a154b;
 }
 
 /* Mobile Styles */

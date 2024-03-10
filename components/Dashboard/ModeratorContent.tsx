@@ -75,7 +75,7 @@ export default function Content() {
 
   return (
     <div className="flex flex-col h-full lg:px-6 gap-5">
-      <h1 className="flex justify-center text-3xl font-bold">Operator Dashboard</h1>
+      <h1 className="flex justify-center text-3xl font-bold">Mdderator Dashboard</h1>
       <Card>
         <CardBody>
           <CardHeader title="Bus Schedule" >
@@ -83,40 +83,32 @@ export default function Content() {
           </CardHeader>
           <Table aria-label="Example static collection table">
             <TableHeader>
-              <TableColumn style={{ width: "20%" }}>DATE</TableColumn>
-              <TableColumn style={{ width: "25%" }}>SCHEDULED TIME</TableColumn>
+              <TableColumn style={{ width: "20%" }}>FROM</TableColumn>
+              <TableColumn style={{ width: "25%" }}>TO</TableColumn>
               <TableColumn style={{ width: "40%" }}>
                 <p className="flex justify-center">TICKETS</p>
-                <div className="flex justify-between gap-2">
-                  <p>AVAILABLE</p>
+                <div className="flex justify-center gap-2">
                   <p>SOLD</p>
-                  <p>RESERVED</p>
                 </div>
               </TableColumn>
-              <TableColumn>AC/Non-AC</TableColumn>
             </TableHeader>
             <TableBody>
               {busSchedules.map((schedule, index) => (
                 <TableRow key={index}>
                   <TableCell>
-                    <Button onClick={() => { openDateModalWithSchedule(schedule.id) }} variant="light">
-                      {schedule.date}
+                    <Button variant="light">
+                      {schedule.from}
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button onClick={() => { openModalWithSchedule(schedule.id) }} variant="light">
-                      {formatTime(schedule.time)}
+                    <Button variant="light">
+                      {schedule.to}
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button onClick={() => { openSelectedBus(schedule.id) }} className="flex w-full justify-between gap-2">
-                      <p>{schedule.tickets.available}</p>
+                    <Button className="flex w-full justify-center gap-2">
                       <p>{schedule.tickets.sold}</p>
-                      <p>{schedule.tickets.reserved}</p>
                     </Button>
-                  </TableCell>
-                  <TableCell>
-                    {schedule.ac ? "AC" : "Non-AC"}
                   </TableCell>
                 </TableRow>
               ))}
@@ -130,8 +122,8 @@ export default function Content() {
             <>
               <ModalHeader className="flex flex-col gap-1">Bus Tickets</ModalHeader>
               <ModalBody>
-                <SeatLayout ticketStatus={{ available: "Available", booked: "Booked", occupied: "Reserved" }} setSeatsButton={function (seats: string[]): void {
-                  throw new Error("Function not implemented.");
+                <SeatLayout seatStatus={{ available: "Available", booked: "Booked", occupied: "Reserved" }} setSeatsButton={function (seats: string[]): void {
+                  console.log("Function not implemented.");
                 }} />
                 <div className="flex felx-row justify-center gap-2">
                   <Button>

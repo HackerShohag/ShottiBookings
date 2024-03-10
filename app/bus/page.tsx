@@ -200,7 +200,7 @@ const BusService = () => {
                         <>
                             <ModalHeader className="flex flex-col gap-1">Select Seats</ModalHeader>
                             <ModalBody>
-                                <SeatLayout setSeatsButton={setSeatsButton} ticketStatus={{ available: "Available", booked: "Selected", occupied: "Occupied" }} />
+                                <SeatLayout setSeatsButton={setSeatsButton} seatStatus={{ available: "Available", booked: "Selected", occupied: "Occupied" }} />
                                 {
                                     selectedSeats.length > 0 && currentOfferedJourney ?
                                         <ProcessingFee seats={selectedSeats} cost={currentOfferedJourney.fare} />

@@ -3,10 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import './BusSeatLayout.css';
 import { Button } from '@nextui-org/button';
+import { useSession } from 'next-auth/react';
 
 export interface SeatProps {
     seatNumber: string;
-    status?: 'available' | 'occupied' | 'selected';
+    status?: 'available' | 'booked' | 'occupied' | 'selected';
     onSelect: () => void;
 }
 
@@ -33,7 +34,7 @@ const BlankSeat = () => {
 
 interface SeatLayoutProps {
     width?: string;
-    ticketStatus: {
+    seatStatus: {
         available: string;
         booked: string;
         occupied: string;
@@ -44,14 +45,18 @@ interface SeatLayoutProps {
 const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
     const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
     const [errorMessage, setErrorMessage] = useState<string>('');
+    const { data: session } = useSession();
 
     const handleSeatSelect = (seatNumber: string) => {
         setErrorMessage('');
+
         setSelectedSeats((prevSelectedSeats) => {
             if (prevSelectedSeats.includes(seatNumber)) {
                 return prevSelectedSeats.filter((seat) => seat !== seatNumber);
             } else {
                 if (prevSelectedSeats.length < 6) {
+                    return [...prevSelectedSeats, seatNumber];
+                } else if (session && session.user.role === 'operator') {
                     return [...prevSelectedSeats, seatNumber];
                 } else {
                     setErrorMessage('You can select maximum 6 seats');
@@ -134,15 +139,15 @@ const SeatLayout: React.FC<SeatLayoutProps> = (props) => {
             <div className="flex row m-3 justify-between items-center">
                 <div className="seat-legend">
                     <Button isDisabled className="seat available" ></Button>
-                    <span className='flex justify-center'>{props.ticketStatus.available}</span>
+                    <span className='flex justify-center'>{props.seatStatus.available}</span>
                 </div>
                 <div className="seat-legend">
                     <Button isDisabled className="seat selected"></Button>
-                    <span className='flex justify-center'>{props.ticketStatus.booked}</span>
+                    <span className='flex justify-center'>{props.seatStatus.booked}</span>
                 </div>
                 <div className="seat-legend">
                     <Button isDisabled className="seat occupied" ></Button>
-                    <span className='flex justify-center'>{props.ticketStatus.occupied}</span>
+                    <span className='flex justify-center'>{props.seatStatus.occupied}</span>
                 </div>
             </div>
             <div className='flex column justify-center items-center'>
