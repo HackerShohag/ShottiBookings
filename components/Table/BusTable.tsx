@@ -55,7 +55,7 @@ export const BusTable = (props: AccountsProps) => {
     { name: 'BUS NAME', uid: 'companyName' },
     { name: 'NUMBER', uid: 'no' },
     { name: 'CAPACITY', uid: 'capacity' },
-    // { name: 'SEATS', uid: 'seats' },
+    // { name: 'ROUTE', uid: 'route' },
     { name: 'ACTIONS', uid: 'actions' },
   ]
 

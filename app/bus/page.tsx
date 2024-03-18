@@ -33,6 +33,8 @@ const BusService = () => {
     const [selectedID, setSelectedID] = useState<string>();
     const [currentOfferedJourney, setCurrentOfferedJourney] = useState<OfferedJourney | null>(null);
 
+    const [bookingID, setBookingID] = useState<string>();
+
     const [formData, setFormData] = useState<FormData>({
         origin: '',
         destination: '',
@@ -62,19 +64,23 @@ const BusService = () => {
             return;
         }
 
-        // fetch(siteConfig.backendServer.address + '/booking/create-booking', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': '' + session?.accessToken
-        //     },
-        //     body: JSON.stringify({
-        //         "journey": "65a93fb3683980955d915348",
-        //         "slot": [selectedSeats.join(',')] || [],
-        //     })
-        // }).then(res => res.json())
-        //     .then(data => console.log(data))
-        //     .catch(err => console.log(err));
+        fetch(siteConfig.backendServer.address + '/booking/create-booking', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${session?.accessToken}`,
+            },
+            body: JSON.stringify({
+                "journey": "65a93fb3683980955d915348",
+                "slot": [selectedSeats.join(',')] || [],
+            })
+        }).then(res => res.json())
+            .then(
+                (result) => {
+                    setBookingID(result?.id)
+                }
+            )
+            .catch(err => console.log(err));
 
         console.log([selectedSeats.join(',')]);
 
@@ -223,7 +229,7 @@ const BusService = () => {
                                     <Link
                                         href={{
                                             pathname: '/payment',
-                                            query: "data" // the data
+                                            query: { 'id': '' }
                                         }}
                                     >
                                         Book

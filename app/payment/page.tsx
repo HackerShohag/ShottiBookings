@@ -8,16 +8,17 @@ import { siteConfig } from '@/config/site';
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createTicket } from '@/components/Ticket/Ticket';
 import { useData } from '@/contex/DataContex';
+import { useSession } from 'next-auth/react';
 
 function PaymentPage() {
     const router = useRouter();
+    const { data: session, status } = useSession();
     const { data, setData } = useData();
 
     const [searchParams] = useSearchParams();
-    if (!searchParams) {
+    if (!searchParams.includes('id')) {
         router.push('/bus');
     }
-    console.log(searchParams);
 
     function donwloadTicket() {
         const ticketData = {
@@ -57,25 +58,26 @@ function PaymentPage() {
 
     const handleBkashPayment = () => {
         const paymentData = {
-            amount: 100,
-            paymentMethod: 'bKash'
+            // booking: '65a93fb3683980955d915348'
+            booking: searchParams.at(1)
         }
-        // Send paymentData to server
-        fetch(siteConfig.backendServer + '/payment/orderBySSL', {
+        fetch(siteConfig.backendServer.address + '/payment/orderBybKash', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `${session?.accessToken}`,
             },
             body: JSON.stringify(paymentData),
-        })
-            .then(response => response.json())
+        }).then(response => response.json())
             .then(data => {
-                console.log('Success:', data);
-                window.location.href = data.paymentUrl;
+                console.log(data);
+                // window.location.href = data.paymentUrl;
+                return true;
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
+        return false;
     }
 
     return (
@@ -84,18 +86,19 @@ function PaymentPage() {
 
             <div className="grid grid-cols-2 justify-center items-center gap-5">
                 <Card className="flex flex-col items-center justify-center gap-4 p-4">
-                    <Image src={bkashImage} alt="bKash" />
+                    <Image className='rounded-lg' src={bkashImage} alt="bKash" />
                     <Button
                         onClick={() => {
-                            handleBkashPayment();
-                            donwloadTicket();
+                            if (handleBkashPayment()) {
+                                donwloadTicket();
+                            }
                         }}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
                     >
                         bKash
                     </Button>
                 </Card>
-                <Card className="flex flex-col items-center justify-center gap-4 p-4">
+                {/* <Card className="flex flex-col items-center justify-center gap-4 p-4">
                     <Image src={nagadImage} alt="Nagad" />
                     <Button
                         onClick={() => {
@@ -107,7 +110,7 @@ function PaymentPage() {
                     >
                         Nagad
                     </Button>
-                </Card>
+                </Card> */}
             </div >
         </>
     )
