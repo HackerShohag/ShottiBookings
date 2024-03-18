@@ -75,7 +75,7 @@ export default function Content() {
 
   return (
     <div className="flex flex-col h-full lg:px-6 gap-5">
-      <h1 className="flex justify-center text-3xl font-bold">Mdderator Dashboard</h1>
+      <h1 className="flex justify-center text-3xl font-bold">Moderator Dashboard</h1>
       <Card>
         <CardBody>
           <CardHeader title="Bus Schedule" >

@@ -89,6 +89,10 @@ export const siteConfig = {
 		{
 			label: "Routes",
 			href: "/moderator/dashboard/routes",
+		},
+		{
+			label: "Operators",
+			href: "/moderator/dashboard/operators",
 		}
 	],
 	navMenuItems: [

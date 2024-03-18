@@ -52,7 +52,7 @@ export const BusTable = (props: AccountsProps) => {
   }[props.userType] || "bus";
 
   const columns = [
-    { name: 'COMPANY NAME', uid: 'companyName' },
+    { name: 'BUS NAME', uid: 'companyName' },
     { name: 'NUMBER', uid: 'no' },
     { name: 'CAPACITY', uid: 'capacity' },
     // { name: 'SEATS', uid: 'seats' },

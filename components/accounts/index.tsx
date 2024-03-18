@@ -3,6 +3,7 @@ import { Button, Input } from "@nextui-org/react";
 import React from "react";
 import { ExportIcon } from "@/components/icons/accounts/export-icon";
 import { AddUser } from "@/components/accounts/add-user";
+import { AddBus } from "@/components/accounts/add-bus";
 import { MemberTable } from "@/components/Table/MemberTable";
 import { BusTable } from "@/components/Table/BusTable";
 
@@ -25,7 +26,11 @@ export const Accounts = (props: AccountsProps) => {
           />
         </div>
         <div className="flex flex-row gap-3.5 flex-wrap">
-          <AddUser userType={props.userType} />
+          {
+            props.userType === 'bus' ?
+              <AddBus /> :
+              <AddUser userType={props.userType} />
+          }
           <Button color="primary" startContent={<ExportIcon />}>
             Export to CSV
           </Button>
